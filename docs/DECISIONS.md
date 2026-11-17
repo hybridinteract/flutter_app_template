@@ -66,12 +66,12 @@
 - **Date**: 17 November 2026
 - **Context**: About 60 user-facing strings were hardcoded in views, core widgets and the router, breaking rule 10, and the settings screen already offers a language option.
 - **Decision**: Use Flutter's official gen-l10n. All UI text lives in `lib/core/l10n/arb/app_en.arb` (keys prefixed by feature); views read `context.l10n.key`. `Validators` stay pure Dart with English defaults and accept localized messages. `Failure` messages stay English in core; views can map `failure.code` to l10n keys when an app needs localized errors.
-- **Consequences**: Adding a language is one ARB file and no code changes. Widget tests must register the localization delegates. Generated files are committed and checked in CI.
+- **Consequences**: Adding a language is one ARB file and no code changes. Widget tests must register the localization delegates. Generated files are committed and checked by `/code-quality-check`.
 
 ## ADR-014: Generated Code Is Never Hand-Edited
 - **Date**: 17 November 2026
 - **Context**: `user_model.g.dart` and `auth_session_model.g.dart` had been edited by hand (snake_case keys, `created_at` fallback, nested `toJson`). Running build_runner would have silently changed the API payloads.
-- **Decision**: Express JSON behavior in annotations (`fieldRename: FieldRename.snake`, `explicitToJson: true`, `readValue`). Lock the backend contract with `json_contract_test.dart`. CI regenerates code and fails on any diff.
+- **Decision**: Express JSON behavior in annotations (`fieldRename: FieldRename.snake`, `explicitToJson: true`, `readValue`). Lock the backend contract with `json_contract_test.dart`. `/code-quality-check` regenerates code and fails on any diff.
 - **Consequences**: `build_runner` is safe to run at any time.
 
 ## ADR-015: Material via material_ui on Flutter 3.47+
@@ -91,5 +91,5 @@
 - **Date**: 17 November 2026
 - **Context**: Starting an app meant renaming `app_template` by hand in about 70 files (Dart imports, Gradle, Kotlin folder, Xcode project, plist, constants, docs), which is easy to get half done.
 - **Decision**: `tool/new_app.dart` does the rename deterministically (validated input, dry run, refuses to run twice); the `/new-app <name>` skill wraps it with pre-flight checks, one confirmation, regeneration, the full quality check and a fresh git history. The org is fixed to `com.hybridinteractive`; the iOS bundle id camelCases names with underscores. `check_architecture.dart` reads the package name from `pubspec.yaml`. The generator deletes itself from the new app.
-- **Consequences**: A new app is one command and always passes CI from its first commit. Changes to the template's identity (a new file that names `app_template`) are picked up automatically by the generic replacement.
+- **Consequences**: A new app is one command and always passes `/code-quality-check` from its first commit. Changes to the template's identity (a new file that names `app_template`) are picked up automatically by the generic replacement.
 <!-- new-app:end -->

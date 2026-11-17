@@ -1,4 +1,4 @@
-# Static analysis for the template. CI runs `flutter analyze --fatal-infos`,
+# Static analysis for the template. `/code-quality-check` runs `flutter analyze --fatal-infos`,
 # so every lint below must be clean. Import boundaries are checked separately
 # by `dart run tool/check_architecture.dart`.
 include: package:flutter_lints/flutter.yaml

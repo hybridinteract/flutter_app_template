@@ -5,7 +5,7 @@
 //
 // Usage:
 //   dart run tool/sync_agent_config.dart          # regenerate the mirror
-//   dart run tool/sync_agent_config.dart --check  # exit 1 if out of sync (CI)
+//   dart run tool/sync_agent_config.dart --check  # exit 1 if out of sync (/code-quality-check)
 import 'dart:io';
 
 const _generatedNotice =

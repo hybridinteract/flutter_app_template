@@ -1,10 +1,10 @@
 ---
 name: code-quality-check
-description: Run the complete pre-commit quality pipeline (code generation, format check, strict analysis, tests with coverage, architecture audit, agent-config sync check). Same checks as CI.
+description: Run the complete pre-commit quality pipeline (code generation, format check, strict analysis, tests with coverage, architecture audit, agent-config sync check). Run before every commit; there is no hosted CI.
 ---
 # Workflow: Code Quality & Architecture Audit
 
-Run before committing or opening a PR. Every step must pass; CI runs the same commands.
+Run before committing or opening a PR. Every step must pass; this is the only gate (the template has no hosted CI).
 
 1. **Code generation** (generated files must match the annotations; never hand-edit `*.g.dart`):
    ```bash

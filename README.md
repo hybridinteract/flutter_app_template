@@ -1,6 +1,5 @@
 # Flutter Application Template
 
-[![Flutter CI](https://github.com/your-org/app_template/actions/workflows/ci.yml/badge.svg)](https://github.com/your-org/app_template/actions/workflows/ci.yml)
 [![Flutter](https://img.shields.io/badge/Flutter-3.44+-02569B?logo=flutter)](https://flutter.dev)
 [![Dart](https://img.shields.io/badge/Dart-3.12+-0175C2?logo=dart)](https://dart.dev)
 [![Architecture](https://img.shields.io/badge/Architecture-Modular%20MVC%20%2B%20Clean-success)](#architecture--layering)
@@ -19,7 +18,6 @@ A production-ready Flutter enterprise starter template built following the **Flu
 - [Getting Started & Local Setup](#getting-started--local-setup)
 - [Running the App & Environments](#running-the-app--environments)
 - [Architecture & Layering](#architecture--layering)
-- [Continuous Integration (CI/CD)](#continuous-integration-cicd)
 - [Testing & Quality Assurance](#testing--quality-assurance)
 - [Scaffolding New Features](#scaffolding-new-features)
 - [AI Agent Integration](#ai-agent-integration-agent--claude)
@@ -204,40 +202,6 @@ Full standard: [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) · decisions: [`do
 
 ---
 
-## Continuous Integration (CI/CD)
-
-The project includes an automated GitHub Actions CI workflow in [`.github/workflows/ci.yml`](.github/workflows/ci.yml).
-
-### Pipeline Workflow
-The CI pipeline runs automatically on:
-- Every push to `main`, `master`, or `develop`
-- Every pull request targeting `main`, `master`, or `develop`
-
-```mermaid
-flowchart LR
-    A[Trigger: Push / PR] --> B[Job: Lint, Analyze & Test]
-    B --> B1[Setup Java 17 & Flutter]
-    B1 --> B2[flutter pub get]
-    B2 --> B3[dart format check]
-    B3 --> B4[flutter analyze --fatal-infos]
-    B4 --> B5[Architecture audit]
-    B5 --> B6[Agent config sync check]
-    B6 --> B7[flutter test --coverage]
-    B7 --> B8[Upload Coverage Artifact]
-    B --> C[Job: Build Verification]
-    C --> C1[flutter build apk --debug]
-```
-
-### Pipeline Checks
-1. **Formatting**: Enforces standard Dart formatting via `dart format --output=none --set-exit-if-changed .`
-2. **Static Analysis**: Zero errors, warnings and infos with `flutter analyze --fatal-infos`
-3. **Architecture Audit**: Import boundaries via `dart run tool/check_architecture.dart`
-4. **Agent Config Sync**: `.agent/` and `GEMINI.md` match `.claude/` and `CLAUDE.md` (`dart run tool/sync_agent_config.dart --check`)
-5. **Automated Testing**: Runs the complete unit and widget test suite with code coverage (`flutter test --coverage`)
-6. **Build Verification**: Builds Android debug APK to prevent compilation regressions
-
----
-
 ## Testing & Quality Assurance
 
 The template ships with tests for every layer. `test/` mirrors `lib/`:
@@ -262,7 +226,10 @@ dart format .                                            # format
 flutter analyze --fatal-infos                            # static analysis
 dart run tool/check_architecture.dart                    # import-boundary audit
 dart run build_runner build                              # code generation
+dart run tool/sync_agent_config.dart --check             # agent config (.agent/, GEMINI.md) in sync
 ```
+
+Run the whole pipeline with `/code-quality-check` before every commit. There is no hosted CI, so this local check is the gate.
 
 ---
 
@@ -291,14 +258,14 @@ Every feature lives in `lib/features/<feature>/` (full-stack reference: `lib/fea
 This repository is set up for coding agents (**Claude Code**, **Antigravity**):
 
 - **Source of truth**: `CLAUDE.md` and `.claude/` (rules, skills, settings).
-- **Generated mirror**: `GEMINI.md` and `.agent/` for Antigravity. Never edit them by hand; run `dart run tool/sync_agent_config.dart`. CI fails if they drift.
+- **Generated mirror**: `GEMINI.md` and `.agent/` for Antigravity. Never edit them by hand; run `dart run tool/sync_agent_config.dart`. `/code-quality-check` fails if they drift.
 - **Path-scoped rules** (`.claude/rules/`): `layering`, `bloc`, `views`, `routing`, `networking`, `errors`, `models`, `di`, `testing`.
 - **Skills** (`.claude/skills/`):
   - `/new-feature`: scaffold a feature module end to end.
   - `/new-api-endpoint`: add an endpoint to an existing feature.
   - `/add-screen`: add a screen + route + widget test.
   - `/write-tests`: generate BLoC, repository, model, widget and route tests.
-  - `/code-quality-check`: format, analyze, test, architecture audit, sync check (same as CI).
+  - `/code-quality-check`: format, analyze, test, architecture audit, sync check (run before every commit).
   - `/debug-flow`: runbook for network, session expiry, BLoC, GetIt and GoRouter issues.
 - **Hooks** (`settings.json`): runs `dart format lib test` after file edits.
 
@@ -309,4 +276,4 @@ This repository is set up for coding agents (**Claude Code**, **Antigravity**):
 The rules are kept in one place and enforced automatically:
 - **Layer rules & anti-patterns**: [`CLAUDE.md`](CLAUDE.md)
 - **Detailed rules**: [`.claude/rules/`](.claude/rules/)
-- **Automated audit**: `dart run tool/check_architecture.dart` (runs in CI)
+- **Automated audit**: `dart run tool/check_architecture.dart` (part of `/code-quality-check`)
