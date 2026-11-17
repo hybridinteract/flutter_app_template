@@ -1,0 +1,57 @@
+# Static analysis for the template. CI runs `flutter analyze --fatal-infos`,
+# so every lint below must be clean. Import boundaries are checked separately
+# by `dart run tool/check_architecture.dart`.
+include: package:flutter_lints/flutter.yaml
+
+analyzer:
+  exclude:
+    - "**/*.g.dart"
+  errors:
+    # Async mistakes and leaked resources are bugs, not style.
+    unawaited_futures: warning
+    cancel_subscriptions: warning
+    close_sinks: warning
+
+linter:
+  rules:
+    # Correctness
+    - unawaited_futures
+    - cancel_subscriptions
+    - close_sinks
+    - avoid_void_async
+    - only_throw_errors
+    - throw_in_finally
+    - no_adjacent_strings_in_list
+    - test_types_in_equals
+    - avoid_dynamic_calls
+    - avoid_type_to_string
+    - avoid_slow_async_io
+    - use_build_context_synchronously
+
+    # Consistency
+    - always_declare_return_types
+    - directives_ordering
+    - prefer_single_quotes
+    - prefer_final_locals
+    - prefer_final_in_for_each
+    - unnecessary_lambdas
+    - unnecessary_parenthesis
+    - use_super_parameters
+    - avoid_print
+    - avoid_multiple_declarations_per_line
+    - unnecessary_await_in_return
+    - unnecessary_breaks
+    - prefer_void_to_null
+
+    # Flutter performance
+    - prefer_const_constructors
+    - prefer_const_constructors_in_immutables
+    - prefer_const_declarations
+    - prefer_const_literals_to_create_immutables
+    - sized_box_for_whitespace
+    - use_colored_box
+    - use_decorated_box
+    - avoid_unnecessary_containers
+    - sized_box_shrink_expand
+    - no_runtimeType_toString
+    - use_string_buffers

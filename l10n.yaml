@@ -1,0 +1,10 @@
+# Flutter gen-l10n configuration. Strings live in ARB files; the Dart API is
+# generated into lib/core/l10n/generated/ (committed, never edit by hand).
+# Regenerate after editing an ARB file: flutter gen-l10n
+arb-dir: lib/core/l10n/arb
+template-arb-file: app_en.arb
+output-dir: lib/core/l10n/generated
+output-localization-file: app_localizations.dart
+output-class: AppLocalizations
+nullable-getter: false
+format: true

@@ -1,0 +1,114 @@
+{
+  "@@locale": "en",
+
+  "commonEmail": "Email",
+  "commonPassword": "Password",
+  "commonEmailHint": "user@example.com",
+  "commonNotSet": "Not set",
+  "commonRefresh": "Refresh",
+  "commonTryAgain": "Try Again",
+  "commonSomethingWentWrong": "Something went wrong",
+  "commonCancel": "Cancel",
+  "commonConfirm": "Confirm",
+
+  "errorTitle": "Error",
+  "errorPageNotFoundTitle": "404 - Page Not Found",
+  "errorPageNotFoundMessage": "The page \"{path}\" does not exist.",
+  "@errorPageNotFoundMessage": {
+    "placeholders": { "path": { "type": "String" } }
+  },
+  "errorBackToHome": "Back to Home",
+
+  "validationRequired": "This field is required.",
+  "validationEmailRequired": "Email is required.",
+  "validationEmailInvalid": "Please enter a valid email address.",
+  "validationPasswordRequired": "Password is required.",
+  "validationPasswordTooShort": "Password must be at least {minLength} characters long.",
+  "@validationPasswordTooShort": {
+    "placeholders": { "minLength": { "type": "int" } }
+  },
+  "validationConfirmPasswordRequired": "Please confirm your password.",
+  "validationPasswordsDoNotMatch": "Passwords do not match.",
+  "validationPasswordWeak": "Use an uppercase letter, a lowercase letter, a digit and a special character.",
+  "validationPasswordTooLong": "Password must be at most {maxLength} characters long.",
+  "@validationPasswordTooLong": {
+    "placeholders": { "maxLength": { "type": "int" } }
+  },
+  "validationLengthBetween": "Must be between {min} and {max} characters.",
+  "@validationLengthBetween": {
+    "placeholders": { "min": { "type": "int" }, "max": { "type": "int" } }
+  },
+
+  "authWelcomeBack": "Welcome Back",
+  "authSignInSubtitle": "Sign in to access your account",
+  "authSignIn": "Sign In",
+  "authSignUp": "Sign Up",
+  "authNoAccount": "Don't have an account? ",
+  "authHaveAccount": "Already have an account? ",
+  "authCreateAccount": "Create Account",
+  "authGetStarted": "Get Started",
+  "authRegisterSubtitle": "Create a new account to continue",
+  "authFullName": "Full Name",
+  "authFullNameHint": "John Doe",
+  "authConfirmPassword": "Confirm Password",
+  "authAccountTypeLabel": "I am a",
+  "authAccountTypeCreator": "Creator",
+  "authAccountTypeBrand": "Brand",
+  "authOrganizationName": "Organization Name",
+  "authOrganizationNameHint": "Acme Pvt Ltd",
+  "authSocialHandle": "Social Handle",
+  "authSocialHandleHint": "@yourhandle",
+  "authVerifyEmailTitle": "Verify Your Email",
+  "authVerifyEmailSubtitle": "Enter the code we sent to {email}",
+  "@authVerifyEmailSubtitle": {
+    "placeholders": { "email": { "type": "String" } }
+  },
+  "authVerificationCode": "Verification Code",
+  "authVerificationCodeHint": "123456",
+  "authVerify": "Verify",
+  "authNoCode": "Didn't get the code? ",
+  "authResendCode": "Resend Code",
+  "authCodeResent": "A new code is on its way.",
+
+  "bookingTitle": "Bookings",
+  "bookingLoading": "Loading bookings...",
+  "bookingEmptyTitle": "No Bookings Found",
+  "bookingEmptyMessage": "You have not made any bookings yet.",
+  "bookingDetailsTitle": "Booking Details",
+  "bookingDetailsLoading": "Loading details...",
+  "bookingDescription": "Description",
+  "bookingNoDescription": "No additional details provided.",
+  "bookingDate": "Date",
+  "bookingTotalPrice": "Total Price",
+
+  "homeTitle": "Home",
+  "homeLogout": "Logout",
+  "homeSignOut": "Sign Out",
+  "homeDefaultUserName": "User",
+  "homeGreeting": "Hello, {name}!",
+  "@homeGreeting": {
+    "placeholders": { "name": { "type": "String" } }
+  },
+  "homeFeatures": "Features",
+  "homeBookingsTitle": "Bookings Module",
+  "homeBookingsSubtitle": "View and manage your reservations",
+  "homeProfileTitle": "Profile",
+  "homeProfileSubtitle": "Account settings and preferences",
+
+  "profileTitle": "Profile",
+  "profileName": "Name",
+  "profileEmail": "Email",
+  "profileRole": "Role",
+  "profileDefaultRole": "USER",
+
+  "settingsTitle": "Settings",
+  "settingsThemeToggled": "Theme switching toggled",
+  "settingsDarkMode": "Dark Mode",
+  "settingsLanguage": "Language",
+  "settingsLanguageName": "English",
+  "settingsAbout": "About",
+  "settingsVersion": "Version {version}",
+  "@settingsVersion": {
+    "placeholders": { "version": { "type": "String" } }
+  }
+}
