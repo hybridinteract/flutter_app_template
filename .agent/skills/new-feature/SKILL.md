@@ -4,7 +4,7 @@ description: Scaffold a new feature module under lib/features/<feature>/ (model,
 ---
 # Workflow: Scaffold New Feature Module
 
-Reference implementation to copy patterns from: `lib/features/booking/`.
+Reference implementation for the full stack (model → service → repository → BLoC → views → tests): `lib/features/auth/` and `test/features/auth/`. Auth is app-wide; a new feature's BLoC is route-scoped (step 2). For list → detail screens with a path parameter, copy the pattern in `.agent/rules/routing.md`; for paginated lists use `AppPaginatedList` (its doc comment has a full example).
 Read `docs/ARCHITECTURE.md` first if you have not this session.
 
 ## 0. Clarify

@@ -5,7 +5,8 @@
 // Exits with code 1 and lists every violation when a rule is broken.
 import 'dart:io';
 
-const _package = 'package:app_template/';
+/// `package:<name>/`, read from pubspec.yaml so a renamed app needs no edit.
+final _package = 'package:${_packageName()}/';
 const _authPublicApi = 'features/auth/auth.dart';
 
 /// Above this a file is doing more than one job; split it.
@@ -17,6 +18,21 @@ const _networkImageWidget = 'core/widgets/app_network_image.dart';
 final _directive = RegExp(r'''^\s*(?:import|export)\s+['"]([^'"]+)['"]''');
 final _rawNetworkImage = RegExp(r'\b(?:Image\.network|NetworkImage)\s*\(');
 final _lineComment = RegExp(r'^\s*//');
+
+String _packageName() {
+  final pubspec = File('pubspec.yaml');
+  final name = pubspec.existsSync()
+      ? RegExp(
+          r'^name:\s*(\S+)',
+          multiLine: true,
+        ).firstMatch(pubspec.readAsStringSync())?.group(1)
+      : null;
+  if (name == null) {
+    stderr.writeln('Run from the project root (pubspec.yaml name not found).');
+    exit(2);
+  }
+  return name;
+}
 
 void main() {
   final lib = Directory('lib');

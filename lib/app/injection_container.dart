@@ -11,10 +11,6 @@ import 'package:app_template/features/auth/controllers/auth_bloc.dart';
 import 'package:app_template/features/auth/repositories/auth_repository.dart';
 import 'package:app_template/features/auth/repositories/auth_repository_impl.dart';
 import 'package:app_template/features/auth/services/auth_service.dart';
-import 'package:app_template/features/booking/controllers/booking_bloc.dart';
-import 'package:app_template/features/booking/repositories/booking_repository.dart';
-import 'package:app_template/features/booking/repositories/booking_repository_impl.dart';
-import 'package:app_template/features/booking/services/booking_service.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -72,15 +68,4 @@ Future<void> setupDependencies() async {
     ),
   );
   getIt.registerFactory<AuthBloc>(() => AuthBloc(getIt<AuthRepository>()));
-
-  // ─── Feature: booking ───────────────────────────────────────────────
-  getIt.registerLazySingleton<BookingService>(
-    () => BookingService(getIt<DioClient>()),
-  );
-  getIt.registerLazySingleton<BookingRepository>(
-    () => BookingRepositoryImpl(getIt<BookingService>()),
-  );
-  getIt.registerFactory<BookingBloc>(
-    () => BookingBloc(getIt<BookingRepository>()),
-  );
 }

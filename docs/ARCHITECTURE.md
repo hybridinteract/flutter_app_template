@@ -66,14 +66,11 @@ lib/
 │   │   ├── auth_routes.dart
 │   │   ├── models/ services/ repositories/ controllers/
 │   │   └── views/ (+ widgets/permission_guard.dart, auth_context_extensions.dart)
-│   ├── booking/                  # Reference feature: full stack + route-scoped BLoC
-│   │   ├── booking_routes.dart
-│   │   └── models/ services/ repositories/ controllers/ views/
-│   ├── home/  profile/  settings/   # View-only features (views/ + *_routes.dart)
+│   └── home/                     # View-only feature (views/ + home_routes.dart)
 └── main.dart                     # Config → BLoC observer → DI → crash reporting → runApp(App)
 
 test/                             # Mirrors lib/ (test/core/..., test/features/<feature>/...)
-tool/                             # check_architecture.dart, sync_agent_config.dart
+tool/                             # check_architecture.dart, sync_agent_config.dart, new_app.dart
 ```
 
 ### Inside a feature

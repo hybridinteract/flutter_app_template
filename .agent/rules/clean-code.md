@@ -17,8 +17,8 @@ paths:
 - A BLoC that handles more than ~8 events or serves unrelated screens is doing two jobs: split it.
 
 ## Names
-- Names say what a thing is: `bookingCount`, not `n` or `data2`. Booleans read as questions: `isLoading`, `hasMore`, `canEdit`.
-- Events are requests or facts (`LoginRequested`, `SearchQueryChanged`); states describe the screen (`BookingLoading`, `BookingSuccess`).
+- Names say what a thing is: `productCount`, not `n` or `data2`. Booleans read as questions: `isLoading`, `hasMore`, `canEdit`.
+- Events are requests or facts (`LoginRequested`, `SearchQueryChanged`); states describe the screen (`ProductLoading`, `ProductSuccess`).
 - No abbreviations beyond the common ones (`id`, `url`, `api`, `json`).
 
 ## Keep it clean

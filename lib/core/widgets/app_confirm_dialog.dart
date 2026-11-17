@@ -8,12 +8,12 @@ import '../l10n/l10n.dart';
 /// ```dart
 /// final confirmed = await AppConfirmDialog.show(
 ///   context,
-///   title: l10n.bookingDeleteTitle,
-///   message: l10n.bookingDeleteMessage,
-///   confirmText: l10n.bookingDeleteConfirm,
+///   title: l10n.productDeleteTitle,
+///   message: l10n.productDeleteMessage,
+///   confirmText: l10n.productDeleteConfirm,
 ///   isDestructive: true,
 /// );
-/// if (confirmed && context.mounted) bloc.add(BookingDeleted(id));
+/// if (confirmed && context.mounted) bloc.add(ProductDeleted(id));
 /// ```
 class AppConfirmDialog extends StatelessWidget {
   const AppConfirmDialog({

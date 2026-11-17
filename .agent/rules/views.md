@@ -19,7 +19,7 @@ paths:
   - `AppConfirmDialog.show(...)`: yes/no before destructive actions; returns `Future<bool>`.
   - `Debouncer` (`core/utils/`): search and filter input.
 - No hardcoded colors, sizes or spacing: use `Theme.of(context)` / `context.colorScheme` / `context.textTheme` and `AppDimensions`.
-- No hardcoded user-facing text: add the key to `lib/core/l10n/arb/app_en.arb` (prefixed by feature: `auth*`, `booking*`, `common*` ...), run `flutter gen-l10n`, and read it with `context.l10n.key` (`final l10n = context.l10n;` at the top of `build`).
+- No hardcoded user-facing text: add the key to `lib/core/l10n/arb/app_en.arb` (prefixed by feature: `auth*`, `home*`, `common*` ...), run `flutter gen-l10n`, and read it with `context.l10n.key` (`final l10n = context.l10n;` at the top of `build`).
 - Pass localized messages to `Validators` (e.g. `Validators.email(v, requiredMessage: l10n.validationEmailRequired, message: l10n.validationEmailInvalid)`).
 - Navigate with `context.go` / `context.push` and `RouteNames` constants only.
 - Responsive: Mobile < 600, Tablet 600–1023, Desktop ≥ 1024 (`ScreenBreakpoints`, `ResponsiveLayout`). No fixed screen widths or heights.

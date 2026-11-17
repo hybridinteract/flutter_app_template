@@ -15,7 +15,7 @@ description: Generate unit tests (BLoC, repository, service, model, core) and wi
 | `lib/features/<f>/<f>_routes.dart` | `test/features/<f>/<f>_routes_test.dart` |
 | `lib/core/<area>/<file>.dart` | `test/core/<area>/<file>_test.dart` |
 
-Reference tests: `test/features/booking/` and `test/core/network/api_interceptor_test.dart`.
+Reference tests: `test/features/auth/` (BLoC, repository, models, screens) and `test/core/network/api_interceptor_test.dart`.
 
 ## 1. BLoC (`bloc_test` + `mocktail`)
 - `class MockXRepository extends Mock implements XRepository {}` (mock the contract).
@@ -38,6 +38,20 @@ Reference tests: `test/features/booking/` and `test/core/network/api_interceptor
 ## 5. Routes
 - Register real or mock dependencies in `getIt` in `setUp`; call `getIt.reset()` in `tearDown`.
 - Build `GoRouter(routes: XRoutes.routes)` and drive it with `router.push` / `router.pop`.
+- For list → detail routes (pattern in `.claude/rules/routing.md`), prove each route gets its own BLoC:
+  ```dart
+  getIt.registerFactory<ProductBloc>(() {
+    blocsCreated++;
+    return ProductBloc(repository);
+  });
+  // pump MaterialApp.router(routerConfig: GoRouter(initialLocation: RouteNames.products, routes: ProductRoutes.routes))
+  unawaited(router.push(RouteNames.productDetailsPath('p1'))); // push() completes only on pop
+  await tester.pumpAndSettle();
+  router.pop();
+  await tester.pumpAndSettle();
+  expect(find.text('List item title'), findsOneWidget); // list state survived
+  expect(blocsCreated, 2);
+  ```
 
 ## 6. Network / core
 - Call `AppConfig.initialize(baseUrl: ..., enableLogging: false)` in `setUpAll` when the code reads `AppConfig`.

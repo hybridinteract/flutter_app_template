@@ -172,36 +172,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get authCodeResent => 'A new code is on its way.';
 
   @override
-  String get bookingTitle => 'Bookings';
-
-  @override
-  String get bookingLoading => 'Loading bookings...';
-
-  @override
-  String get bookingEmptyTitle => 'No Bookings Found';
-
-  @override
-  String get bookingEmptyMessage => 'You have not made any bookings yet.';
-
-  @override
-  String get bookingDetailsTitle => 'Booking Details';
-
-  @override
-  String get bookingDetailsLoading => 'Loading details...';
-
-  @override
-  String get bookingDescription => 'Description';
-
-  @override
-  String get bookingNoDescription => 'No additional details provided.';
-
-  @override
-  String get bookingDate => 'Date';
-
-  @override
-  String get bookingTotalPrice => 'Total Price';
-
-  @override
   String get homeTitle => 'Home';
 
   @override
@@ -216,58 +186,5 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String homeGreeting(String name) {
     return 'Hello, $name!';
-  }
-
-  @override
-  String get homeFeatures => 'Features';
-
-  @override
-  String get homeBookingsTitle => 'Bookings Module';
-
-  @override
-  String get homeBookingsSubtitle => 'View and manage your reservations';
-
-  @override
-  String get homeProfileTitle => 'Profile';
-
-  @override
-  String get homeProfileSubtitle => 'Account settings and preferences';
-
-  @override
-  String get profileTitle => 'Profile';
-
-  @override
-  String get profileName => 'Name';
-
-  @override
-  String get profileEmail => 'Email';
-
-  @override
-  String get profileRole => 'Role';
-
-  @override
-  String get profileDefaultRole => 'USER';
-
-  @override
-  String get settingsTitle => 'Settings';
-
-  @override
-  String get settingsThemeToggled => 'Theme switching toggled';
-
-  @override
-  String get settingsDarkMode => 'Dark Mode';
-
-  @override
-  String get settingsLanguage => 'Language';
-
-  @override
-  String get settingsLanguageName => 'English';
-
-  @override
-  String get settingsAbout => 'About';
-
-  @override
-  String settingsVersion(String version) {
-    return 'Version $version';
   }
 }

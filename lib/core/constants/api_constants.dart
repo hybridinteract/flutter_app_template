@@ -25,8 +25,4 @@ abstract final class ApiConstants {
   // does not send it there.
   static const String workspaces = '/workspaces';
   static const String workspaceOptions = '/workspaces/options';
-
-  // Feature Endpoints
-  static const String bookings = '/bookings';
-  static const String bookingDetails = '/bookings'; // + '/{id}'
 }

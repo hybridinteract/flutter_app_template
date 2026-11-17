@@ -4,10 +4,7 @@ import 'package:app_template/core/routes/route_names.dart';
 import 'package:app_template/core/widgets/app_error_widget.dart';
 import 'package:app_template/features/auth/auth.dart';
 import 'package:app_template/features/auth/auth_routes.dart';
-import 'package:app_template/features/booking/booking_routes.dart';
 import 'package:app_template/features/home/home_routes.dart';
-import 'package:app_template/features/profile/profile_routes.dart';
-import 'package:app_template/features/settings/settings_routes.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
 
@@ -33,13 +30,7 @@ abstract final class AppRouter {
         if (isAuthenticated && isPublicRoute) return RouteNames.home;
         return null;
       },
-      routes: [
-        ...AuthRoutes.routes,
-        ...HomeRoutes.routes,
-        ...BookingRoutes.routes,
-        ...ProfileRoutes.routes,
-        ...SettingsRoutes.routes,
-      ],
+      routes: [...AuthRoutes.routes, ...HomeRoutes.routes],
       errorBuilder: (context, state) => Scaffold(
         appBar: AppBar(title: Text(context.l10n.errorTitle)),
         body: AppErrorWidget(

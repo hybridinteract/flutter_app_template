@@ -4,7 +4,7 @@ paths:
 ---
 # Testing Rules
 
-- `test/` mirrors `lib/`: `lib/features/booking/controllers/booking_bloc.dart` → `test/features/booking/controllers/booking_bloc_test.dart`.
+- `test/` mirrors `lib/`: `lib/features/auth/controllers/auth_bloc.dart` → `test/features/auth/controllers/auth_bloc_test.dart`.
 - Tools: `flutter_test`, `bloc_test` (`blocTest`, `MockBloc`) and `mocktail`. Mock contracts, not implementations: `class MockXRepository extends Mock implements XRepository {}`.
 - Minimum per feature: BLoC test (success + failure per event), repository test (success, error → `Failure`), widget test per screen (loading, error, success).
 - Mocks of `AuthRepository` must stub `sessionExpired` (e.g. `thenAnswer((_) => const Stream.empty())`) because `AuthBloc` subscribes to it in its constructor.

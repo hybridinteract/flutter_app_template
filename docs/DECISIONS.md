@@ -79,3 +79,17 @@
 - **Context**: Flutter 3.47 deprecated `package:flutter/material.dart` and `flutter/cupertino.dart` in favor of the `material_ui` and `cupertino_ui` packages, which define their own `MaterialApp`, `Theme` and `MaterialLocalizations` types. `flutter analyze --fatal-infos` failed on every import. gen-l10n (Flutter 3.50) still emits the old `flutter_localizations` Material/Cupertino delegates.
 - **Decision**: Import `material_ui` / `cupertino_ui` everywhere. Upgrade `go_router` to 18 and `cached_network_image` to 4, which use `material_ui`, so no widget mixes the two type sets. Every `MaterialApp` uses `appLocalizationsDelegates` from `core/l10n/l10n.dart` instead of `AppLocalizations.localizationsDelegates`; `lib/core/l10n/generated/` is excluded from analysis. Minimum SDK is Flutter 3.47 / Dart 3.13.
 - **Consequences**: Analysis is clean on current Flutter. A package still on `flutter/material.dart` can miss our `Theme`/localizations; check a new UI package's dependencies before adding it. go_router 15+ matches URLs case-sensitively (all `RouteNames` paths are lowercase).
+
+## ADR-016: The Template Ships Only auth + home
+- **Date**: 17 November 2026
+- **Context**: The template carried `booking` (a reference CRUD feature), `profile` and `settings`. Every new app had to delete them, and the rules pointed at `booking` as the pattern to copy, so deleting it left the rules pointing at nothing.
+- **Decision**: Keep only `auth` (shared by every app) and `home` (the signed-in landing screen). The full-stack reference is `features/auth/`. Patterns auth cannot show (route-scoped BLoC, list → detail with a path parameter, route test) are short `product` snippets in `.claude/rules/routing.md` and the write-tests skill; `AppPaginatedList` and `AppConfirmDialog` stay in `core/` with their own tests and doc examples.
+- **Consequences**: A new app starts with no sample code to remove. Agents copy patterns from the rules instead of from a sample feature.
+
+<!-- new-app:start -->
+## ADR-017: /new-app Creates an App from the Template
+- **Date**: 17 November 2026
+- **Context**: Starting an app meant renaming `app_template` by hand in about 70 files (Dart imports, Gradle, Kotlin folder, Xcode project, plist, constants, docs), which is easy to get half done.
+- **Decision**: `tool/new_app.dart` does the rename deterministically (validated input, dry run, refuses to run twice); the `/new-app <name>` skill wraps it with pre-flight checks, one confirmation, regeneration, the full quality check and a fresh git history. The org is fixed to `com.hybridinteractive`; the iOS bundle id camelCases names with underscores. `check_architecture.dart` reads the package name from `pubspec.yaml`. The generator deletes itself from the new app.
+- **Consequences**: A new app is one command and always passes CI from its first commit. Changes to the template's identity (a new file that names `app_template`) are picked up automatically by the generic replacement.
+<!-- new-app:end -->

@@ -15,15 +15,15 @@ import 'app_loader.dart';
 /// is shown once a first page has arrived.
 ///
 /// ```dart
-/// AppPaginatedList<Booking>(
-///   items: state.bookings,
+/// AppPaginatedList<ProductModel>(
+///   items: state.products,
 ///   hasMore: state.hasMore,
 ///   isLoadingMore: state.isLoadingMore,
 ///   loadMoreError: state.loadMoreError,
-///   onLoadMore: () => bloc.add(const MoreBookingsRequested()),
-///   onRefresh: () async => bloc.add(const LoadBookingsRequested()),
-///   empty: AppEmptyWidget(title: l10n.bookingEmptyTitle),
-///   itemBuilder: (context, booking, _) => BookingTile(booking: booking),
+///   onLoadMore: () => bloc.add(const MoreProductsRequested()),
+///   onRefresh: () async => bloc.add(const ProductsRequested()),
+///   empty: AppEmptyWidget(title: l10n.productEmptyTitle),
+///   itemBuilder: (context, product, _) => ProductTile(product: product),
 /// )
 /// ```
 class AppPaginatedList<T> extends StatefulWidget {

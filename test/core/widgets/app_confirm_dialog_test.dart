@@ -19,7 +19,7 @@ void main() {
                 onPressed: () async {
                   result = await AppConfirmDialog.show(
                     context,
-                    title: 'Delete booking?',
+                    title: 'Delete item?',
                     message: 'This cannot be undone.',
                   );
                 },
@@ -38,7 +38,7 @@ void main() {
     ) async {
       await openDialog(tester);
 
-      expect(find.text('Delete booking?'), findsOneWidget);
+      expect(find.text('Delete item?'), findsOneWidget);
       expect(find.text('This cannot be undone.'), findsOneWidget);
       expect(find.text('Cancel'), findsOneWidget);
       expect(find.text('Confirm'), findsOneWidget);

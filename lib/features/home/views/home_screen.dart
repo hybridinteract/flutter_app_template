@@ -1,11 +1,9 @@
 import 'package:app_template/core/extensions/context_extensions.dart';
 import 'package:app_template/core/l10n/l10n.dart';
-import 'package:app_template/core/routes/route_names.dart';
 import 'package:app_template/core/theme/app_dimensions.dart';
 import 'package:app_template/core/widgets/app_button.dart';
 import 'package:app_template/features/auth/auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -98,43 +96,6 @@ class HomeScreen extends StatelessWidget {
                               ),
                             ],
                           ),
-                        ),
-                      ),
-                      const SizedBox(height: AppDimensions.spacingXl),
-                      Text(
-                        l10n.homeFeatures,
-                        style: theme.textTheme.titleMedium,
-                      ),
-                      const SizedBox(height: AppDimensions.spacingMd),
-                      Card(
-                        elevation: AppDimensions.elevationLow,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(
-                            AppDimensions.radiusMd,
-                          ),
-                        ),
-                        child: ListTile(
-                          leading: const Icon(Icons.book_online_outlined),
-                          title: Text(l10n.homeBookingsTitle),
-                          subtitle: Text(l10n.homeBookingsSubtitle),
-                          trailing: const Icon(Icons.chevron_right),
-                          onTap: () => context.push(RouteNames.bookings),
-                        ),
-                      ),
-                      const SizedBox(height: AppDimensions.spacingMd),
-                      Card(
-                        elevation: AppDimensions.elevationLow,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(
-                            AppDimensions.radiusMd,
-                          ),
-                        ),
-                        child: ListTile(
-                          leading: const Icon(Icons.person_outline),
-                          title: Text(l10n.homeProfileTitle),
-                          subtitle: Text(l10n.homeProfileSubtitle),
-                          trailing: const Icon(Icons.chevron_right),
-                          onTap: () => context.push(RouteNames.profile),
                         ),
                       ),
                       const SizedBox(height: AppDimensions.spacingXl),

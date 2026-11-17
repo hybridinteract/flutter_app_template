@@ -12,6 +12,7 @@ Commands:
 - Localization (after editing lib/core/l10n/arb/*.arb): `flutter gen-l10n`
 - Architecture audit: `dart run tool/check_architecture.dart`
 - Sync agent config (after editing this file or .claude/): `dart run tool/sync_agent_config.dart`
+- New app from this template (fresh clone only): `/new-app <name>` (prompt for other agents: docs/NEW_APP_PROMPT.md)
 
 Structure (details: docs/ARCHITECTURE.md; read it before creating a feature or folder):
 ```
@@ -58,6 +59,7 @@ Skills:
 - Write tests: `.agent/skills/write-tests/SKILL.md`
 - Quality check: `.agent/skills/code-quality-check/SKILL.md`
 - Debug flow: `.agent/skills/debug-flow/SKILL.md`
+- New app from template: `.agent/skills/new-app/SKILL.md`
 
 New Feature Checklist (master prompt: docs/PROMPT_TEMPLATE.md):
 1. Model with JSON serialization in features/<feature>/models/.

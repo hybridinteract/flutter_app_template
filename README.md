@@ -11,6 +11,9 @@ A production-ready Flutter enterprise starter template built following the **Flu
 ---
 
 ## Table of Contents
+<!-- new-app:start -->
+- [Start a New App from This Template](#start-a-new-app-from-this-template)
+<!-- new-app:end -->
 - [Tech Stack](#tech-stack)
 - [Prerequisites & System Requirements](#prerequisites--system-requirements)
 - [Getting Started & Local Setup](#getting-started--local-setup)
@@ -60,6 +63,21 @@ flutter doctor
 
 ---
 
+<!-- new-app:start -->
+## Start a New App from This Template
+
+```bash
+git clone https://github.com/your-org/app_template.git influen
+cd influen
+claude
+/new-app influen
+```
+
+This works like `flutter create`, but with this architecture. Only the name is needed. It sets the Dart package to `influen`, the display name to `Influen`, and the Android applicationId and iOS bundle id to `com.hybridinteractive.influen`. Then it regenerates code, runs every quality check and starts a fresh git history. The generator removes itself from the new app. For other agents, see [`docs/NEW_APP_PROMPT.md`](docs/NEW_APP_PROMPT.md).
+
+---
+
+<!-- new-app:end -->
 ## Getting Started & Local Setup
 
 ### 1. Clone the Repository
@@ -166,11 +184,10 @@ lib/
 ├── features/
 │   ├── auth/                # auth.dart (public API), auth_routes.dart, models/ services/
 │   │                        # repositories/ controllers/ views/
-│   ├── booking/             # reference feature (full stack, route-scoped BLoC)
-│   ├── home/  profile/  settings/
+│   └── home/                # signed-in landing screen (view-only)
 └── main.dart
 test/                        # mirrors lib/
-tool/                        # check_architecture.dart, sync_agent_config.dart
+tool/                        # check_architecture.dart, sync_agent_config.dart, new_app.dart
 ```
 
 Full standard: [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) · decisions: [`docs/DECISIONS.md`](docs/DECISIONS.md)
@@ -226,7 +243,7 @@ flutter test
 flutter test --coverage
 
 # Run one feature's tests
-flutter test test/features/booking/
+flutter test test/features/auth/
 ```
 
 ### Quality Assurance Commands:
@@ -241,7 +258,7 @@ dart run build_runner build                              # code generation
 
 ## Scaffolding New Features
 
-Every feature lives in `lib/features/<feature>/` (copy patterns from `lib/features/booking/`):
+Every feature lives in `lib/features/<feature>/` (full-stack reference: `lib/features/auth/`; list → detail routing pattern: `.claude/rules/routing.md`):
 
 1. **Constants**: endpoints in `core/constants/api_constants.dart`, paths in `core/routes/route_names.dart`.
 2. **Model**: `models/<feature>_model.dart` with `@JsonSerializable()` and `Equatable`.

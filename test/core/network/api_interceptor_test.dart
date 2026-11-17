@@ -140,7 +140,7 @@ void main() {
     storage.accessToken = 'new_access';
     final server = _FakeServer();
 
-    final response = await buildClient(server).get<dynamic>('/bookings');
+    final response = await buildClient(server).get<dynamic>('/items');
 
     expect(response.statusCode, 200);
     expect(server.refreshCalls, 0);
@@ -187,8 +187,8 @@ void main() {
     final dio = buildClient(server);
 
     final responses = await Future.wait([
-      dio.get<dynamic>('/bookings'),
-      dio.get<dynamic>('/bookings/1'),
+      dio.get<dynamic>('/items'),
+      dio.get<dynamic>('/items/1'),
       dio.get<dynamic>('/auth/me'),
     ]);
 
@@ -207,7 +207,7 @@ void main() {
       final subscription = notifier.onExpired.listen((_) => expiredEvents++);
 
       await expectLater(
-        dio.get<dynamic>('/bookings'),
+        dio.get<dynamic>('/items'),
         throwsA(
           isA<DioException>().having(
             (e) => e.response?.statusCode,

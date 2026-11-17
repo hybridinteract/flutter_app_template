@@ -70,17 +70,6 @@
   "authResendCode": "Resend Code",
   "authCodeResent": "A new code is on its way.",
 
-  "bookingTitle": "Bookings",
-  "bookingLoading": "Loading bookings...",
-  "bookingEmptyTitle": "No Bookings Found",
-  "bookingEmptyMessage": "You have not made any bookings yet.",
-  "bookingDetailsTitle": "Booking Details",
-  "bookingDetailsLoading": "Loading details...",
-  "bookingDescription": "Description",
-  "bookingNoDescription": "No additional details provided.",
-  "bookingDate": "Date",
-  "bookingTotalPrice": "Total Price",
-
   "homeTitle": "Home",
   "homeLogout": "Logout",
   "homeSignOut": "Sign Out",
@@ -88,27 +77,5 @@
   "homeGreeting": "Hello, {name}!",
   "@homeGreeting": {
     "placeholders": { "name": { "type": "String" } }
-  },
-  "homeFeatures": "Features",
-  "homeBookingsTitle": "Bookings Module",
-  "homeBookingsSubtitle": "View and manage your reservations",
-  "homeProfileTitle": "Profile",
-  "homeProfileSubtitle": "Account settings and preferences",
-
-  "profileTitle": "Profile",
-  "profileName": "Name",
-  "profileEmail": "Email",
-  "profileRole": "Role",
-  "profileDefaultRole": "USER",
-
-  "settingsTitle": "Settings",
-  "settingsThemeToggled": "Theme switching toggled",
-  "settingsDarkMode": "Dark Mode",
-  "settingsLanguage": "Language",
-  "settingsLanguageName": "English",
-  "settingsAbout": "About",
-  "settingsVersion": "Version {version}",
-  "@settingsVersion": {
-    "placeholders": { "version": { "type": "String" } }
   }
 }
