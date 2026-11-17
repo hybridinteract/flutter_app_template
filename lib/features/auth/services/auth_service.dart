@@ -1,5 +1,6 @@
 import 'package:app_template/core/constants/api_constants.dart';
 import 'package:app_template/core/network/dio_client.dart';
+
 import '../models/account_type.dart';
 import '../models/auth_session_model.dart';
 import '../models/user_model.dart';
@@ -74,9 +75,8 @@ class AuthService {
       ApiConstants.resendVerification,
       data: {'email': email},
     );
-    return VerificationChallengeModel.fromJson(
-      _payload(response.data),
-    ).copyWith(email: email);
+    return VerificationChallengeModel.fromJson(_payload(response.data))
+        .copyWith(email: email);
   }
 
   Future<AuthSessionModel> refreshToken(String refreshToken) async {

@@ -73,15 +73,12 @@ void main() {
           ),
         ).thenAnswer((_) async => testSession);
 
-        when(
-          () => mockSecureStorage.setAccessToken(any()),
-        ).thenAnswer((_) async {});
-        when(
-          () => mockSecureStorage.setRefreshToken(any()),
-        ).thenAnswer((_) async {});
-        when(
-          () => mockLocalStorage.setString(any(), any()),
-        ).thenAnswer((_) async => true);
+        when(() => mockSecureStorage.setAccessToken(any()))
+            .thenAnswer((_) async {});
+        when(() => mockSecureStorage.setRefreshToken(any()))
+            .thenAnswer((_) async {});
+        when(() => mockLocalStorage.setString(any(), any()))
+            .thenAnswer((_) async => true);
 
         final result = await repository.login(
           email: 'test@example.com',
@@ -89,59 +86,52 @@ void main() {
         );
 
         expect(result, equals(testUser));
-        verify(
-          () => mockSecureStorage.setAccessToken('test_access_token'),
-        ).called(1);
-        verify(
-          () => mockSecureStorage.setRefreshToken('test_refresh_token'),
-        ).called(1);
-        verify(
-          () => mockLocalStorage.setString(StorageKeys.user, any()),
-        ).called(1);
+        verify(() => mockSecureStorage.setAccessToken('test_access_token'))
+            .called(1);
+        verify(() => mockSecureStorage.setRefreshToken('test_refresh_token'))
+            .called(1);
+        verify(() => mockLocalStorage.setString(StorageKeys.user, any()))
+            .called(1);
         // A workspace chosen by a previous account must not carry over.
         verify(() => mockWorkspaceStore.clear()).called(1);
       },
     );
 
-    test(
-      'login turns a 403 into EmailNotVerifiedFailure when a new code can be sent',
-      () async {
-        when(
-          () => mockAuthService.login(
-            email: any(named: 'email'),
-            password: any(named: 'password'),
-          ),
-        ).thenThrow(
-          const ForbiddenFailure(
-            message: 'Email not verified. Check your inbox for the code.',
-          ),
-        );
-        when(
-          () => mockAuthService.resendVerification(email: any(named: 'email')),
-        ).thenAnswer(
-          (_) async => const VerificationChallengeModel(
-            email: 'test@example.com',
-            expiresIn: 900,
-            devCode: '123456',
-          ),
-        );
+    test('login turns a 403 into EmailNotVerifiedFailure when a new code can be sent', () async {
+      when(
+        () => mockAuthService.login(
+          email: any(named: 'email'),
+          password: any(named: 'password'),
+        ),
+      ).thenThrow(
+        const ForbiddenFailure(
+          message: 'Email not verified. Check your inbox for the code.',
+        ),
+      );
+      when(() => mockAuthService.resendVerification(email: any(named: 'email')))
+          .thenAnswer(
+            (_) async => const VerificationChallengeModel(
+              email: 'test@example.com',
+              expiresIn: 900,
+              devCode: '123456',
+            ),
+          );
 
-        await expectLater(
-          repository.login(email: 'test@example.com', password: 'Passw0rd!'),
-          throwsA(
-            isA<EmailNotVerifiedFailure>()
-                .having((f) => f.email, 'email', 'test@example.com')
-                .having((f) => f.challenge.devCode, 'devCode', '123456')
-                .having(
-                  (f) => f.message,
-                  'message',
-                  'Email not verified. Check your inbox for the code.',
-                ),
-          ),
-        );
-        verifyNever(() => mockSecureStorage.setAccessToken(any()));
-      },
-    );
+      await expectLater(
+        repository.login(email: 'test@example.com', password: 'Passw0rd!'),
+        throwsA(
+          isA<EmailNotVerifiedFailure>()
+              .having((f) => f.email, 'email', 'test@example.com')
+              .having((f) => f.challenge.devCode, 'devCode', '123456')
+              .having(
+                (f) => f.message,
+                'message',
+                'Email not verified. Check your inbox for the code.',
+              ),
+        ),
+      );
+      verifyNever(() => mockSecureStorage.setAccessToken(any()));
+    });
 
     test(
       'login keeps the 403 when the account is already verified (suspended)',
@@ -243,15 +233,12 @@ void main() {
           code: any(named: 'code'),
         ),
       ).thenAnswer((_) async => testSession);
-      when(
-        () => mockSecureStorage.setAccessToken(any()),
-      ).thenAnswer((_) async {});
-      when(
-        () => mockSecureStorage.setRefreshToken(any()),
-      ).thenAnswer((_) async {});
-      when(
-        () => mockLocalStorage.setString(any(), any()),
-      ).thenAnswer((_) async => true);
+      when(() => mockSecureStorage.setAccessToken(any()))
+          .thenAnswer((_) async {});
+      when(() => mockSecureStorage.setRefreshToken(any()))
+          .thenAnswer((_) async {});
+      when(() => mockLocalStorage.setString(any(), any()))
+          .thenAnswer((_) async => true);
 
       final result = await repository.verifyEmail(
         email: 'test@example.com',
@@ -259,12 +246,10 @@ void main() {
       );
 
       expect(result, testUser);
-      verify(
-        () => mockSecureStorage.setAccessToken('test_access_token'),
-      ).called(1);
-      verify(
-        () => mockSecureStorage.setRefreshToken('test_refresh_token'),
-      ).called(1);
+      verify(() => mockSecureStorage.setAccessToken('test_access_token'))
+          .called(1);
+      verify(() => mockSecureStorage.setRefreshToken('test_refresh_token'))
+          .called(1);
       verify(() => mockWorkspaceStore.clear()).called(1);
     });
 
@@ -285,14 +270,13 @@ void main() {
     });
 
     test('resendVerification returns the new challenge', () async {
-      when(
-        () => mockAuthService.resendVerification(email: any(named: 'email')),
-      ).thenAnswer(
-        (_) async => const VerificationChallengeModel(
-          email: 'test@example.com',
-          expiresIn: 900,
-        ),
-      );
+      when(() => mockAuthService.resendVerification(email: any(named: 'email')))
+          .thenAnswer(
+            (_) async => const VerificationChallengeModel(
+              email: 'test@example.com',
+              expiresIn: 900,
+            ),
+          );
 
       final result = await repository.resendVerification(
         email: 'test@example.com',
@@ -316,9 +300,8 @@ void main() {
     });
 
     test('logout should clear auth tokens and local cached profile', () async {
-      when(
-        () => mockSecureStorage.getRefreshToken(),
-      ).thenAnswer((_) async => 'refresh_token');
+      when(() => mockSecureStorage.getRefreshToken())
+          .thenAnswer((_) async => 'refresh_token');
       when(
         () => mockAuthService.logout(refreshToken: any(named: 'refreshToken')),
       ).thenAnswer((_) async {});
@@ -335,9 +318,8 @@ void main() {
     test(
       'isAuthenticated should return true when access token exists',
       () async {
-        when(
-          () => mockSecureStorage.getAccessToken(),
-        ).thenAnswer((_) async => 'valid_token');
+        when(() => mockSecureStorage.getAccessToken())
+            .thenAnswer((_) async => 'valid_token');
 
         final result = await repository.isAuthenticated();
 
@@ -348,9 +330,8 @@ void main() {
     test(
       'isAuthenticated should return false when access token is null',
       () async {
-        when(
-          () => mockSecureStorage.getAccessToken(),
-        ).thenAnswer((_) async => null);
+        when(() => mockSecureStorage.getAccessToken())
+            .thenAnswer((_) async => null);
 
         final result = await repository.isAuthenticated();
 
@@ -358,31 +339,24 @@ void main() {
       },
     );
 
-    test(
-      'getCurrentUser returns null and drops the cached user when there is no token',
-      () async {
-        when(
-          () => mockSecureStorage.getAccessToken(),
-        ).thenAnswer((_) async => null);
-        when(
-          () => mockLocalStorage.remove(any()),
-        ).thenAnswer((_) async => true);
+    test('getCurrentUser returns null and drops the cached user when there is no token', () async {
+      when(() => mockSecureStorage.getAccessToken())
+          .thenAnswer((_) async => null);
+      when(() => mockLocalStorage.remove(any())).thenAnswer((_) async => true);
 
-        final result = await repository.getCurrentUser();
+      final result = await repository.getCurrentUser();
 
-        expect(result, isNull);
-        verify(() => mockLocalStorage.remove(StorageKeys.user)).called(1);
-        verifyNever(() => mockLocalStorage.getString(any()));
-        verifyNever(() => mockAuthService.getCurrentUser());
-      },
-    );
+      expect(result, isNull);
+      verify(() => mockLocalStorage.remove(StorageKeys.user)).called(1);
+      verifyNever(() => mockLocalStorage.getString(any()));
+      verifyNever(() => mockAuthService.getCurrentUser());
+    });
 
     test(
       'getCurrentUser returns the cached user when a token exists',
       () async {
-        when(
-          () => mockSecureStorage.getAccessToken(),
-        ).thenAnswer((_) async => 'valid_token');
+        when(() => mockSecureStorage.getAccessToken())
+            .thenAnswer((_) async => 'valid_token');
         when(() => mockLocalStorage.getString(StorageKeys.user)).thenReturn(
           '{"id":"user_1","name":"Test User","email":"test@example.com"}',
         );
@@ -395,13 +369,11 @@ void main() {
     );
 
     test('getCurrentUser maps service errors to a Failure', () async {
-      when(
-        () => mockSecureStorage.getAccessToken(),
-      ).thenAnswer((_) async => 'valid_token');
+      when(() => mockSecureStorage.getAccessToken())
+          .thenAnswer((_) async => 'valid_token');
       when(() => mockLocalStorage.getString(any())).thenReturn(null);
-      when(
-        () => mockAuthService.getCurrentUser(),
-      ).thenThrow(Exception('socket closed: raw details'));
+      when(() => mockAuthService.getCurrentUser())
+          .thenThrow(Exception('socket closed: raw details'));
 
       expect(
         () => repository.getCurrentUser(),

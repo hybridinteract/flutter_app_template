@@ -1,4 +1,5 @@
 import 'package:app_template/core/error/failure.dart';
+
 import '../models/booking_model.dart';
 import '../services/booking_service.dart';
 import 'booking_repository.dart';

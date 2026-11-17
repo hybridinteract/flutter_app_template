@@ -40,7 +40,7 @@ description: Add a new screen or sub-view to an existing feature under lib/featu
 
 ## 5. Widget test
 - File: `test/features/<feature>/views/<screen_name>_screen_test.dart`.
-- Give the `MaterialApp` `localizationsDelegates: AppLocalizations.localizationsDelegates` and `supportedLocales: AppLocalizations.supportedLocales`.
+- Give the `MaterialApp` `localizationsDelegates: appLocalizationsDelegates` and `supportedLocales: AppLocalizations.supportedLocales`.
 - Wrap the screen in `BlocProvider<XBloc>.value(value: mockBloc, ...)` with `class MockXBloc extends MockBloc<XEvent, XState> implements XBloc {}`.
 - Cover loading, error (retry dispatches the event) and success.
 - `AppLoader` animates forever: use `tester.pump()` instead of `pumpAndSettle()` for loading states.

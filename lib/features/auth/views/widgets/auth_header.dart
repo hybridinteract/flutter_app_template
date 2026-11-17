@@ -1,5 +1,5 @@
 import 'package:app_template/core/theme/app_dimensions.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class AuthHeader extends StatelessWidget {
   const AuthHeader({

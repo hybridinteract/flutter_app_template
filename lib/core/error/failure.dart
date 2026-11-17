@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
+
 import '../network/api_exception.dart'; // also exports app_exception.dart
 
 abstract class Failure extends Equatable implements Exception {

@@ -58,9 +58,8 @@ void main() {
   blocTest<BookingBloc, BookingState>(
     'emits [Loading, DetailSuccess] when booking details load',
     build: () {
-      when(
-        () => repository.getBookingDetails('b1'),
-      ).thenAnswer((_) async => booking);
+      when(() => repository.getBookingDetails('b1'))
+          .thenAnswer((_) async => booking);
       return BookingBloc(repository);
     },
     act: (bloc) => bloc.add(const LoadBookingDetailsRequested('b1')),

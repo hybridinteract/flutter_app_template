@@ -44,7 +44,7 @@ Create a new feature module called "[Feature Name]" following the project's arch
 2. Add endpoints to `lib/core/constants/api_constants.dart` and paths to `lib/core/routes/route_names.dart`.
 3. Register Service, Repository, and BLoC in `lib/app/injection_container.dart`.
 4. Spread `[Module]Routes.routes` into `lib/app/app_router.dart`.
-5. Run `dart run build_runner build --delete-conflicting-outputs`.
+5. Run `dart run build_runner build`.
 6. Write tests in `test/features/[module]/` using the `/write-tests` skill:
    - BLoC unit tests (`bloc_test`)
    - Repository unit tests (`mocktail`)

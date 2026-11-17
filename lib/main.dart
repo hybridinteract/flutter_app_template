@@ -4,8 +4,8 @@ import 'package:app_template/core/config/app_config.dart';
 import 'package:app_template/core/di/service_locator.dart';
 import 'package:app_template/core/services/crash_reporting_service.dart';
 import 'package:app_template/core/utils/app_bloc_observer.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:material_ui/material_ui.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

@@ -32,7 +32,7 @@ Reference tests: `test/features/booking/` and `test/core/network/api_interceptor
 
 ## 4. Widget (screen)
 - `class MockXBloc extends MockBloc<XEvent, XState> implements XBloc {}`; wrap with `BlocProvider<XBloc>.value`.
-- The `MaterialApp` needs `localizationsDelegates: AppLocalizations.localizationsDelegates` and `supportedLocales: AppLocalizations.supportedLocales` (from `core/l10n/l10n.dart`).
+- The `MaterialApp` needs `localizationsDelegates: appLocalizationsDelegates` and `supportedLocales: AppLocalizations.supportedLocales` (from `core/l10n/l10n.dart`).
 - Cases: loading shows `AppLoader` (use `tester.pump()`, not `pumpAndSettle()`, because it animates); success shows content; error shows `AppErrorWidget` and retry dispatches the event; forms show validation errors.
 
 ## 5. Routes

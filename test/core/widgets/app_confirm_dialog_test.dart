@@ -1,7 +1,7 @@
 import 'package:app_template/core/l10n/l10n.dart';
 import 'package:app_template/core/widgets/app_confirm_dialog.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:material_ui/material_ui.dart';
 
 void main() {
   group('AppConfirmDialog.show', () {
@@ -11,7 +11,7 @@ void main() {
       result = null;
       await tester.pumpWidget(
         MaterialApp(
-          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          localizationsDelegates: appLocalizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
           home: Builder(
             builder: (context) => Scaffold(

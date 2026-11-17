@@ -7,9 +7,9 @@ import 'package:app_template/features/auth/controllers/auth_bloc.dart';
 import 'package:app_template/features/auth/controllers/auth_event.dart';
 import 'package:app_template/features/auth/controllers/auth_state.dart';
 import 'package:bloc_test/bloc_test.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:mocktail/mocktail.dart';
 
 class MockAuthBloc extends MockBloc<AuthEvent, AuthState> implements AuthBloc {}
@@ -34,7 +34,7 @@ void main() {
           child: MaterialApp.router(
             title: AppConstants.appName,
             theme: AppTheme.lightTheme,
-            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            localizationsDelegates: appLocalizationsDelegates,
             supportedLocales: AppLocalizations.supportedLocales,
             routerConfig: router,
           ),

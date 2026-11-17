@@ -7,9 +7,9 @@ import 'package:app_template/features/booking/booking_routes.dart';
 import 'package:app_template/features/booking/controllers/booking_bloc.dart';
 import 'package:app_template/features/booking/models/booking_model.dart';
 import 'package:app_template/features/booking/repositories/booking_repository.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:mocktail/mocktail.dart';
 
 class MockBookingRepository extends Mock implements BookingRepository {}
@@ -33,9 +33,8 @@ void main() {
     repository = MockBookingRepository();
     blocsCreated = 0;
     when(() => repository.getBookings()).thenAnswer((_) async => [listBooking]);
-    when(
-      () => repository.getBookingDetails('b1'),
-    ).thenAnswer((_) async => detailBooking);
+    when(() => repository.getBookingDetails('b1'))
+        .thenAnswer((_) async => detailBooking);
     getIt.registerFactory<BookingBloc>(() {
       blocsCreated++;
       return BookingBloc(repository);
@@ -55,7 +54,7 @@ void main() {
 
       await tester.pumpWidget(
         MaterialApp.router(
-          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          localizationsDelegates: appLocalizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
           routerConfig: router,
         ),

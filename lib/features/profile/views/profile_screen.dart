@@ -2,8 +2,8 @@ import 'package:app_template/core/extensions/context_extensions.dart';
 import 'package:app_template/core/l10n/l10n.dart';
 import 'package:app_template/core/theme/app_dimensions.dart';
 import 'package:app_template/features/auth/auth.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:material_ui/material_ui.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});

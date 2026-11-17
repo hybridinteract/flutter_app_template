@@ -9,6 +9,6 @@ paths:
 - Minimum per feature: BLoC test (success + failure per event), repository test (success, error → `Failure`), widget test per screen (loading, error, success).
 - Mocks of `AuthRepository` must stub `sessionExpired` (e.g. `thenAnswer((_) => const Stream.empty())`) because `AuthBloc` subscribes to it in its constructor.
 - Tests that use `getIt` (e.g. route tests) register what they need in `setUp` and call `getIt.reset()` in `tearDown`.
-- Widget tests that render screens or `AppErrorWidget` must give the `MaterialApp` `localizationsDelegates: AppLocalizations.localizationsDelegates` and `supportedLocales: AppLocalizations.supportedLocales` (import `core/l10n/l10n.dart`). Assert on the English strings.
+- Widget tests that render screens or `AppErrorWidget` must give the `MaterialApp` `localizationsDelegates: appLocalizationsDelegates` and `supportedLocales: AppLocalizations.supportedLocales` (import `core/l10n/l10n.dart`). Assert on the English strings.
 - Call `AppConfig.initialize(baseUrl: ...)` in `setUpAll` when code under test reads `AppConfig` (network, app root).
 - Never hit the real network; fake it with mocks or a fake `HttpClientAdapter` (see `test/core/network/api_interceptor_test.dart`).

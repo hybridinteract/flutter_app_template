@@ -1,5 +1,7 @@
 import 'dart:io';
+
 import 'package:dio/dio.dart';
+
 import '../error/app_exception.dart';
 
 export '../error/app_exception.dart';
@@ -17,8 +19,7 @@ AppException mapDioExceptionToAppException(DioException error) {
 
     case DioExceptionType.connectionError:
       return NetworkException(
-        message:
-            'Unable to connect to the server. Please check your internet connection.',
+        message: 'Unable to connect to the server. Please check your internet connection.',
         details: error.error,
       );
 
@@ -65,9 +66,7 @@ AppException mapDioExceptionToAppException(DioException error) {
           );
         case 409:
           return ConflictException(
-            message: message.isNotEmpty
-                ? message
-                : 'This conflicts with existing data. Please refresh and try again.',
+            message: message.isNotEmpty ? message : 'This conflicts with existing data. Please refresh and try again.',
             statusCode: 409,
             details: responseData,
           );

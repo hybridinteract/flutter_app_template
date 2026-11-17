@@ -5,8 +5,8 @@ import 'package:app_template/core/utils/date_utils.dart';
 import 'package:app_template/core/utils/formatters.dart';
 import 'package:app_template/core/widgets/app_error_widget.dart';
 import 'package:app_template/core/widgets/app_loader.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../controllers/booking_bloc.dart';
 import '../controllers/booking_event.dart';

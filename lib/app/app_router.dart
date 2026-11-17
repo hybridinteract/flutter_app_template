@@ -8,8 +8,8 @@ import 'package:app_template/features/booking/booking_routes.dart';
 import 'package:app_template/features/home/home_routes.dart';
 import 'package:app_template/features/profile/profile_routes.dart';
 import 'package:app_template/features/settings/settings_routes.dart';
-import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Assembles every feature's routes into one [GoRouter] and applies the
 /// auth redirect. Features define their own routes in `<feature>_routes.dart`;

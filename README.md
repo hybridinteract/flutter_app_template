@@ -28,7 +28,7 @@ A production-ready Flutter enterprise starter template built following the **Flu
 
 | Category | Technology | Purpose |
 |---|---|---|
-| **Framework / Language** | Flutter 3.44+ / Dart 3.12+ | Cross-platform core |
+| **Framework / Language** | Flutter 3.47+ / Dart 3.13+ | Cross-platform core; Material and Cupertino via `material_ui` / `cupertino_ui` |
 | **State Management** | `flutter_bloc` + `equatable` | Unidirectional data flow, predictable states |
 | **API Client** | `dio` | Centralized HTTP client, interceptors, error mapping |
 | **Dependency Injection** | `get_it` | Inversion of control, service locator |
@@ -83,7 +83,7 @@ flutter pub get
 ### 4. Run Code Generation
 The project uses `json_serializable` to generate model serialization code (`*.g.dart`). Generate the missing files:
 ```bash
-dart run build_runner build --delete-conflicting-outputs
+dart run build_runner build
 ```
 
 *(Optional: Run `dart run build_runner watch` during development to auto-regenerate models on save).*
@@ -234,7 +234,7 @@ flutter test test/features/booking/
 dart format .                                            # format
 flutter analyze --fatal-infos                            # static analysis
 dart run tool/check_architecture.dart                    # import-boundary audit
-dart run build_runner build --delete-conflicting-outputs # code generation
+dart run build_runner build                              # code generation
 ```
 
 ---
@@ -251,7 +251,7 @@ Every feature lives in `lib/features/<feature>/` (copy patterns from `lib/featur
 6. **Views**: `views/<feature>_screen.dart` and `views/widgets/`.
 7. **Routes**: `<feature>_routes.dart`, then spread `<Feature>Routes.routes` into `lib/app/app_router.dart`.
 8. **DI**: register service, repository and BLoC in `lib/app/injection_container.dart`.
-9. **Code generation**: `dart run build_runner build --delete-conflicting-outputs`.
+9. **Code generation**: `dart run build_runner build`.
 10. **Tests**: `test/features/<feature>/` (BLoC, repository, screen).
 
 > [!TIP]

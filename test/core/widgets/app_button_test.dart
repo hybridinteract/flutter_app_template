@@ -1,7 +1,7 @@
 import 'package:app_template/core/widgets/app_button.dart';
 import 'package:app_template/core/widgets/app_loader.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:material_ui/material_ui.dart';
 
 void main() {
   group('AppButton', () {

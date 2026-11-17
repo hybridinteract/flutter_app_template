@@ -1,5 +1,6 @@
 import 'package:app_template/core/constants/api_constants.dart';
 import 'package:app_template/core/network/dio_client.dart';
+
 import '../models/booking_model.dart';
 
 class BookingService {

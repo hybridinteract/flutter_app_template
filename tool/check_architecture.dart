@@ -143,6 +143,8 @@ Iterable<String> _check(String source, String uri, String? target) sync* {
       (uri.startsWith('package:flutter/material') ||
           uri.startsWith('package:flutter/widgets') ||
           uri.startsWith('package:flutter/cupertino') ||
+          uri.startsWith('package:material_ui/') ||
+          uri.startsWith('package:cupertino_ui/') ||
           uri.startsWith('package:go_router/') ||
           uri.startsWith('package:dio/') ||
           uri.startsWith('package:get_it/'))) {

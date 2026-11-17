@@ -73,3 +73,9 @@
 - **Context**: `user_model.g.dart` and `auth_session_model.g.dart` had been edited by hand (snake_case keys, `created_at` fallback, nested `toJson`). Running build_runner would have silently changed the API payloads.
 - **Decision**: Express JSON behavior in annotations (`fieldRename: FieldRename.snake`, `explicitToJson: true`, `readValue`). Lock the backend contract with `json_contract_test.dart`. CI regenerates code and fails on any diff.
 - **Consequences**: `build_runner` is safe to run at any time.
+
+## ADR-015: Material via material_ui on Flutter 3.47+
+- **Date**: 17 November 2026
+- **Context**: Flutter 3.47 deprecated `package:flutter/material.dart` and `flutter/cupertino.dart` in favor of the `material_ui` and `cupertino_ui` packages, which define their own `MaterialApp`, `Theme` and `MaterialLocalizations` types. `flutter analyze --fatal-infos` failed on every import. gen-l10n (Flutter 3.50) still emits the old `flutter_localizations` Material/Cupertino delegates.
+- **Decision**: Import `material_ui` / `cupertino_ui` everywhere. Upgrade `go_router` to 18 and `cached_network_image` to 4, which use `material_ui`, so no widget mixes the two type sets. Every `MaterialApp` uses `appLocalizationsDelegates` from `core/l10n/l10n.dart` instead of `AppLocalizations.localizationsDelegates`; `lib/core/l10n/generated/` is excluded from analysis. Minimum SDK is Flutter 3.47 / Dart 3.13.
+- **Consequences**: Analysis is clean on current Flutter. A package still on `flutter/material.dart` can miss our `Theme`/localizations; check a new UI package's dependencies before adding it. go_router 15+ matches URLs case-sensitively (all `RouteNames` paths are lowercase).

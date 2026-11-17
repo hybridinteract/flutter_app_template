@@ -7,7 +7,7 @@ description: Add a new API endpoint to an existing feature under lib/features/<f
 All feature paths below are relative to `lib/features/<feature>/`.
 
 1. **Constant**: add the path to `lib/core/constants/api_constants.dart`.
-2. **Model**: add or update `models/<name>_model.dart` (`@JsonSerializable()`, `Equatable`, `copyWith`). Run `dart run build_runner build --delete-conflicting-outputs`.
+2. **Model**: add or update `models/<name>_model.dart` (`@JsonSerializable()`, `Equatable`, `copyWith`). Run `dart run build_runner build`.
 3. **Service**: add the method to `services/<feature>_service.dart`. It calls `DioClient`, unwraps the `data` envelope if present, and returns a model. No try/catch here.
 4. **Repository contract**: add the signature to `repositories/<feature>_repository.dart`.
 5. **Repository implementation**: implement it in `repositories/<feature>_repository_impl.dart`:

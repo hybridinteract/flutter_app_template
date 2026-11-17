@@ -50,7 +50,7 @@ lib/
 │   ├── di/                       # service_locator.dart (getIt instance)
 │   ├── error/                    # AppException, Failure, mapExceptionToFailure
 │   ├── extensions/               # Context / String extensions
-│   ├── l10n/                     # arb/app_en.arb (all UI text), generated/ (gen-l10n), l10n.dart (context.l10n)
+│   ├── l10n/                     # arb/app_en.arb (all UI text), generated/ (gen-l10n), l10n.dart (context.l10n, appLocalizationsDelegates)
 │   ├── network/                  # DioClient, ApiInterceptor, api_exception, ApiResponse, NetworkInfo
 │   ├── responsive/               # ScreenBreakpoints, ResponsiveLayout, AdaptiveBuilder
 │   ├── routes/                   # RouteNames (all paths), GoRouterRefreshStream

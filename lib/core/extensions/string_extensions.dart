@@ -6,9 +6,9 @@ extension StringExtensions on String {
 
   String get titleCase {
     if (isEmpty) return this;
-    return split(
-      ' ',
-    ).map((word) => word.isNotEmpty ? word.capitalize : '').join(' ');
+    return split(' ')
+        .map((word) => word.isNotEmpty ? word.capitalize : '')
+        .join(' ');
   }
 
   bool get isValidEmail {

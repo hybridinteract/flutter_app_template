@@ -8,7 +8,7 @@ Commands:
 - Format: `dart format .`
 - Analyze: `flutter analyze --fatal-infos`
 - Test: `flutter test --coverage`
-- Code generation: `dart run build_runner build --delete-conflicting-outputs`
+- Code generation: `dart run build_runner build`
 - Localization (after editing lib/core/l10n/arb/*.arb): `flutter gen-l10n`
 - Architecture audit: `dart run tool/check_architecture.dart`
 - Sync agent config (after editing this file or .claude/): `dart run tool/sync_agent_config.dart`

@@ -49,7 +49,7 @@ Read `docs/ARCHITECTURE.md` first if you have not this session.
 - `app_router.dart`: add `...<Feature>Routes.routes` to `routes`. If the route must work without login, add it to `_publicRoutes`.
 
 ## 4. Generate code
-`dart run build_runner build --delete-conflicting-outputs`
+`dart run build_runner build`
 
 ## 5. Tests (mirror `lib/` under `test/features/<feature>/`)
 Use the `write-tests` skill. Minimum:

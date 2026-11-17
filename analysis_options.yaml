@@ -6,6 +6,12 @@ include: package:flutter_lints/flutter.yaml
 analyzer:
   exclude:
     - "**/*.g.dart"
+    # Output of `flutter gen-l10n`, which still emits the pre-material_ui
+    # delegates; the app uses `appLocalizationsDelegates` (core/l10n) instead.
+    - lib/core/l10n/generated/**
+    - build/**
+    - android/**
+    - ios/**
   errors:
     # Async mistakes and leaked resources are bugs, not style.
     unawaited_futures: warning
@@ -39,7 +45,6 @@ linter:
     - use_super_parameters
     - avoid_print
     - avoid_multiple_declarations_per_line
-    - unnecessary_await_in_return
     - unnecessary_breaks
     - prefer_void_to_null
 

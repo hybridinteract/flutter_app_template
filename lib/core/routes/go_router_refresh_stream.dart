@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 
 /// Adapts any [Stream] (for example a BLoC's state stream) into a [Listenable]

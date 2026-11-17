@@ -3,9 +3,9 @@ import 'package:app_template/core/di/service_locator.dart';
 import 'package:app_template/core/l10n/l10n.dart';
 import 'package:app_template/core/theme/app_theme.dart';
 import 'package:app_template/features/auth/auth.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:material_ui/material_ui.dart';
 
 import 'app_router.dart';
 
@@ -47,7 +47,7 @@ class _AppState extends State<App> {
         theme: AppTheme.lightTheme,
         darkTheme: AppTheme.darkTheme,
         themeMode: ThemeMode.system,
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        localizationsDelegates: appLocalizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
         routerConfig: _router,
       ),

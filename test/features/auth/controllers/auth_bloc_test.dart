@@ -30,9 +30,8 @@ void main() {
   setUp(() {
     mockAuthRepository = MockAuthRepository();
     sessionExpiredController = StreamController<void>.broadcast();
-    when(
-      () => mockAuthRepository.sessionExpired,
-    ).thenAnswer((_) => sessionExpiredController.stream);
+    when(() => mockAuthRepository.sessionExpired)
+        .thenAnswer((_) => sessionExpiredController.stream);
   });
 
   tearDown(() => sessionExpiredController.close());
@@ -47,9 +46,8 @@ void main() {
     blocTest<AuthBloc, AuthState>(
       'emits [AuthLoading, AuthSuccess] when CheckAuthStatusRequested finds logged in user',
       build: () {
-        when(
-          () => mockAuthRepository.getCurrentUser(),
-        ).thenAnswer((_) async => testUser);
+        when(() => mockAuthRepository.getCurrentUser())
+            .thenAnswer((_) async => testUser);
         return AuthBloc(mockAuthRepository);
       },
       act: (bloc) => bloc.add(const CheckAuthStatusRequested()),
@@ -59,9 +57,8 @@ void main() {
     blocTest<AuthBloc, AuthState>(
       'emits [AuthLoading, AuthUnauthenticated] when CheckAuthStatusRequested finds no user',
       build: () {
-        when(
-          () => mockAuthRepository.getCurrentUser(),
-        ).thenAnswer((_) async => null);
+        when(() => mockAuthRepository.getCurrentUser())
+            .thenAnswer((_) async => null);
         return AuthBloc(mockAuthRepository);
       },
       act: (bloc) => bloc.add(const CheckAuthStatusRequested()),
@@ -310,9 +307,8 @@ void main() {
     blocTest<AuthBloc, AuthState>(
       'still signs out when clearing the session fails',
       build: () {
-        when(
-          () => mockAuthRepository.clearSession(),
-        ).thenThrow(const StorageFailure());
+        when(() => mockAuthRepository.clearSession())
+            .thenThrow(const StorageFailure());
         return AuthBloc(mockAuthRepository);
       },
       seed: () => const AuthSuccess(user: testUser),

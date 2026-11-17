@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+
 import '../models/booking_model.dart';
 
 abstract class BookingState extends Equatable {

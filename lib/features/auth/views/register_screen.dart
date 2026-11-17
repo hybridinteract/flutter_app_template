@@ -7,9 +7,9 @@ import 'package:app_template/core/utils/helpers.dart';
 import 'package:app_template/core/utils/validators.dart';
 import 'package:app_template/core/widgets/app_button.dart';
 import 'package:app_template/core/widgets/app_text_field.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../controllers/auth_bloc.dart';
 import '../controllers/auth_event.dart';

@@ -5,6 +5,7 @@ paths:
 ---
 # Views & UI Rules
 
+- Import Material from `package:material_ui/material_ui.dart` (and Cupertino from `package:cupertino_ui/cupertino_ui.dart`). `package:flutter/material.dart` and `flutter/cupertino.dart` are deprecated since Flutter 3.47 and fail `flutter analyze --fatal-infos`.
 - Views hold zero business logic and zero API, service or repository calls.
 - Views interact with their feature only through BLoC events and `BlocBuilder` / `BlocListener` / `BlocConsumer`:
   - `BlocBuilder` to rebuild UI, `BlocListener` for side effects (navigation, snackbars), `BlocConsumer` for both.

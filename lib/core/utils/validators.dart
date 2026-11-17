@@ -62,8 +62,7 @@ abstract final class Validators {
     String requiredMessage = 'Password is required.',
     String? tooShortMessage,
     String? tooLongMessage,
-    String weakMessage =
-        'Use an uppercase letter, a lowercase letter, a digit and a special character.',
+    String weakMessage = 'Use an uppercase letter, a lowercase letter, a digit and a special character.',
   }) {
     final lengthError = password(
       value,

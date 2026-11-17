@@ -8,7 +8,7 @@ Run before committing or opening a PR. Every step must pass; CI runs the same co
 
 1. **Code generation** (generated files must match the annotations; never hand-edit `*.g.dart`):
    ```bash
-   dart run build_runner build --delete-conflicting-outputs
+   dart run build_runner build
    ```
    If it hangs with no CPU use (stale cache after moving files), run `dart run build_runner clean` and build again.
    After editing an ARB file also run `flutter gen-l10n` (output in `lib/core/l10n/generated/`, never hand-edited).
