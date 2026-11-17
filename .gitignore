@@ -48,3 +48,6 @@ app.*.map.json
 .env
 .env.*
 !.env.example
+
+# Personal Claude Code settings (not shared)
+.claude/settings.local.json
