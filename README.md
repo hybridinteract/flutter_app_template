@@ -67,13 +67,23 @@ flutter doctor
 ## Start a New App from This Template
 
 ```bash
-git clone https://github.com/your-org/app_template.git influen
-cd influen
+git clone https://github.com/hybridinteract/flutter_app_template.git <your-app-name>
+cd <your-app-name>
 claude
-/new-app influen
+/new-app <your-app-name>
 ```
 
-This works like `flutter create`, but with this architecture. Only the name is needed. It sets the Dart package to `influen`, the display name to `Influen`, and the Android applicationId and iOS bundle id to `com.hybridinteractive.influen`. Then it regenerates code, runs every quality check and starts a fresh git history. The generator removes itself from the new app. For other agents, see [`docs/NEW_APP_PROMPT.md`](docs/NEW_APP_PROMPT.md).
+Replace `<your-app-name>` with your app's name, without the `< >`. For example, `/new-app shop_app` creates an app called Shop App. `/new-app` is the only keyword.
+
+This works like `flutter create`, but with this architecture. Only the name is needed. It sets:
+
+| Item | Value |
+|---|---|
+| Dart package | `<your-app-name>` (snake_case) |
+| Display name | from the name (`shop_app` gives `Shop App`) |
+| Android applicationId and iOS bundle id | `com.hybridinteractive.<your-app-name>` |
+
+Then it regenerates code, runs every quality check and starts a fresh git history. The generator removes itself from the new app. For other agents, see [`docs/NEW_APP_PROMPT.md`](docs/NEW_APP_PROMPT.md).
 
 ---
 

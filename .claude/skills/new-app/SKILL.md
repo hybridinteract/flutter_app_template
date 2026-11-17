@@ -1,11 +1,15 @@
 ---
 name: new-app
-description: Turn a fresh clone of this template into a new app, like `flutter create` with this architecture. Usage `/new-app <name> ["Display Name"]`, e.g. `/new-app influen`. Renames the Dart package, Android applicationId/namespace/Kotlin folder and iOS bundle id to com.hybridinteractive.<name>, sets the display name, regenerates code, runs every quality check and starts a fresh git history. Use when the user asks for a new app, new project or app name from this template.
+description: Turn a fresh clone of this template into a new app, like `flutter create` with this architecture. Usage `/new-app <your-app-name> ["Display Name"]`, e.g. `/new-app shop_app`. Renames the Dart package, Android applicationId/namespace/Kotlin folder and iOS bundle id to com.hybridinteractive.<your-app-name>, sets the display name, regenerates code, runs every quality check and starts a fresh git history. Use when the user asks for a new app, new project or app name from this template.
 ---
 # Workflow: New App from Template
 
-Input: `<name>` (required; any spelling, normalized to snake_case: `Influen` → `influen`, `My App` → `my_app`) and an optional display name (default from the name: `influen_creator` → `Influen Creator`). The org is always `com.hybridinteractive` unless the user names another one (`--org`).
-If no name was given, ask for it. Ask nothing else.
+Input: `<your-app-name>` (required; any spelling, normalized to snake_case: `Shop App` → `shop_app`, `ShopApp` → `shop_app`) and an optional display name (default from the name: `shop_app` → `Shop App`). The org is always `com.hybridinteractive` unless the user names another one (`--org`). Below, `<name>` means the app name the user gave.
+
+Before anything else, check the arguments are really a name:
+- No name given → ask for it.
+- Still the placeholder (contains `<` or `>`), or a sentence or request (more than 3 words, words like "please", "change", "show") → do NOT run the tool. Answer the request if there is one, and ask for the app name, e.g. `/new-app shop_app`.
+Ask nothing else. The tool also rejects these (`validateRawName`), but never rely on that alone.
 
 The rename is done by `tool/new_app.dart`; never rename files by hand.
 

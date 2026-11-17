@@ -4,13 +4,14 @@
 // quality checks and starts a fresh git history.
 //
 // Usage (from the project root):
-//   dart run tool/new_app.dart <name> [--display-name "Name"] [--org com.x] [--dry-run]
+//   dart run tool/new_app.dart <your-app-name> [--display-name "Name"] [--org com.x] [--dry-run]
 //
-//   <name>          App name; normalized to a snake_case Dart package
-//                   ("Influen" -> influen, "My App" -> my_app).
-//   --display-name  Launcher / window name. Default: from <name> ("My App").
+//   <your-app-name> App name; normalized to a snake_case Dart package
+//                   ("Shop App" -> shop_app, "MyApp" -> my_app).
+//                   At most 3 words / 30 characters, no < >.
+//   --display-name  Launcher / window name. Default: from the name ("Shop App").
 //   --org           Reverse domain. Default: com.hybridinteractive, giving
-//                   com.hybridinteractive.<name> on Android and iOS.
+//                   com.hybridinteractive.<your-app-name> on Android and iOS.
 //   --dry-run       Print every change without writing anything.
 //
 // What it changes: the Dart package (pubspec + every package: import), the
@@ -28,6 +29,10 @@ const templateIosId = 'com.example.appTemplate';
 const defaultOrg = 'com.hybridinteractive';
 
 const _kotlinRoot = 'android/app/src/main/kotlin';
+
+/// An app name longer than this is almost certainly a sentence, not a name.
+const maxNameWords = 3;
+const maxNameLength = 30;
 
 /// Files and folders that belong to the generator, not to the generated app.
 const generatorPaths = [
@@ -95,10 +100,10 @@ class AppIdentity {
   AppIdentity({required this.name, required this.displayName, String? org})
     : org = org ?? defaultOrg;
 
-  /// snake_case Dart package name, e.g. `influen`.
+  /// snake_case Dart package name, e.g. `shop_app`.
   final String name;
 
-  /// Human-readable name, e.g. `Influen`.
+  /// Human-readable name, e.g. `Shop App`.
   final String displayName;
 
   /// Reverse domain, e.g. `com.hybridinteractive`.
@@ -113,7 +118,7 @@ class AppIdentity {
   String get kotlinDir => '$_kotlinRoot/${androidId.replaceAll('.', '/')}';
 }
 
-/// "Influen" -> influen, "My App" / "my-app" / "MyApp" -> my_app.
+/// "Shop App" / "shop-app" / "ShopApp" -> shop_app.
 String normalizeName(String input) => input
     .trim()
     .replaceAllMapped(RegExp('([a-z0-9])([A-Z])'), (m) => '${m[1]}_${m[2]}')
@@ -138,10 +143,30 @@ String displayNameFrom(String snake) => snake
     .map((p) => p[0].toUpperCase() + p.substring(1))
     .join(' ');
 
+/// Checks the name exactly as typed, before [normalizeName]. Catches a
+/// placeholder (`<your-app-name>`) or a sentence passed by mistake, which
+/// would otherwise normalize into a valid but unwanted package name.
+String? validateRawName(String input) {
+  final trimmed = input.trim();
+  if (trimmed.contains('<') || trimmed.contains('>')) {
+    return 'Replace <your-app-name> with your real app name, '
+        'e.g. /new-app shop_app.';
+  }
+  final words = trimmed.split(RegExp(r'\s+')).where((w) => w.isNotEmpty);
+  if (words.length > maxNameWords) {
+    return '"$trimmed" looks like a sentence, not an app name '
+        '(max $maxNameWords words). Example: /new-app shop_app.';
+  }
+  return null;
+}
+
 /// Returns why [name] cannot be used, or null when it is valid.
 /// [takenNames] are packages the app already depends on.
 String? validateName(String name, {Set<String> takenNames = const {}}) {
   if (name.isEmpty) return 'The app name is empty.';
+  if (name.length > maxNameLength) {
+    return '"$name" is longer than $maxNameLength characters.';
+  }
   if (!RegExp(r'^[a-z][a-z0-9_]*$').hasMatch(name)) {
     return '"$name" must start with a letter and use only a-z, 0-9 and _.';
   }
@@ -339,6 +364,8 @@ void main(List<String> args) {
     );
   }
 
+  final rawError = validateRawName(options.name);
+  if (rawError != null) _fail(rawError);
   final name = normalizeName(options.name);
   final displayName = options.displayName ?? displayNameFrom(name);
   final org = options.org ?? defaultOrg;
@@ -410,7 +437,7 @@ _Options _parseArgs(List<String> args) {
   }
   if (name == null) {
     _fail(
-      'Usage: dart run tool/new_app.dart <name> '
+      'Usage: dart run tool/new_app.dart <your-app-name> '
       '[--display-name "Name"] [--org com.x] [--dry-run]',
     );
   }

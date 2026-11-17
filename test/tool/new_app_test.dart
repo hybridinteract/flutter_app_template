@@ -7,8 +7,8 @@ import '../../tool/new_app.dart';
 void main() {
   group('normalizeName', () {
     test('turns any spelling into a snake_case package name', () {
-      expect(normalizeName('influen'), 'influen');
-      expect(normalizeName('Influen'), 'influen');
+      expect(normalizeName('shopkart'), 'shopkart');
+      expect(normalizeName('Shopkart'), 'shopkart');
       expect(normalizeName('My App'), 'my_app');
       expect(normalizeName('my-app'), 'my_app');
       expect(normalizeName('MyApp'), 'my_app');
@@ -18,19 +18,19 @@ void main() {
 
   group('derived names', () {
     test('display name and camelCase come from the snake_case name', () {
-      expect(displayNameFrom('influen'), 'Influen');
-      expect(displayNameFrom('influen_creator'), 'Influen Creator');
-      expect(toCamelCase('influen'), 'influen');
-      expect(toCamelCase('influen_creator'), 'influenCreator');
+      expect(displayNameFrom('shopkart'), 'Shopkart');
+      expect(displayNameFrom('shopkart_creator'), 'Shopkart Creator');
+      expect(toCamelCase('shopkart'), 'shopkart');
+      expect(toCamelCase('shopkart_creator'), 'shopkartCreator');
     });
 
     test('ids use com.hybridinteractive by default', () {
-      final id = AppIdentity(name: 'influen', displayName: 'Influen');
-      expect(id.androidId, 'com.hybridinteractive.influen');
-      expect(id.iosId, 'com.hybridinteractive.influen');
+      final id = AppIdentity(name: 'shopkart', displayName: 'Shopkart');
+      expect(id.androidId, 'com.hybridinteractive.shopkart');
+      expect(id.iosId, 'com.hybridinteractive.shopkart');
       expect(
         id.kotlinDir,
-        'android/app/src/main/kotlin/com/hybridinteractive/influen',
+        'android/app/src/main/kotlin/com/hybridinteractive/shopkart',
       );
     });
 
@@ -41,9 +41,28 @@ void main() {
     });
   });
 
+  group('validateRawName', () {
+    test('accepts a name as typed', () {
+      expect(validateRawName('shopkart'), isNull);
+      expect(validateRawName('Food Delivery App'), isNull);
+    });
+
+    test('rejects the <your-app-name> placeholder', () {
+      expect(validateRawName('<your-app-name>'), contains('real app name'));
+      expect(validateRawName('<shopkart>'), isNotNull);
+    });
+
+    test('rejects a sentence passed by mistake', () {
+      expect(
+        validateRawName('please change the example to a placeholder'),
+        contains('sentence'),
+      );
+    });
+  });
+
   group('validation', () {
     test('accepts a normal name', () {
-      expect(validateName('influen'), isNull);
+      expect(validateName('shopkart'), isNull);
     });
 
     test('rejects names that cannot be a package or app id', () {
@@ -53,10 +72,11 @@ void main() {
       expect(validateName('class'), isNotNull);
       expect(validateName('new'), isNotNull);
       expect(validateName('dio', takenNames: {'dio'}), isNotNull);
+      expect(validateName('a' * (maxNameLength + 1)), contains('longer'));
     });
 
     test('rejects display names that would break Dart, XML or plist', () {
-      expect(validateDisplayName('Influen Pro'), isNull);
+      expect(validateDisplayName('Shopkart Pro'), isNull);
       expect(validateDisplayName("Mike's"), isNotNull);
       expect(validateDisplayName('A & B'), isNotNull);
       expect(validateDisplayName(r'Price $'), isNotNull);
@@ -79,33 +99,33 @@ void main() {
   });
 
   group('replaceIdentity', () {
-    final id = AppIdentity(name: 'influen', displayName: 'Influen');
+    final id = AppIdentity(name: 'shopkart', displayName: 'Shopkart');
 
     test('rewrites every form of the template identity', () {
       expect(
         replaceIdentity("import 'package:app_template/core/x.dart';", id),
-        "import 'package:influen/core/x.dart';",
+        "import 'package:shopkart/core/x.dart';",
       );
-      expect(replaceIdentity('name: app_template', id), 'name: influen');
+      expect(replaceIdentity('name: app_template', id), 'name: shopkart');
       expect(
         replaceIdentity('applicationId = "com.example.app_template"', id),
-        'applicationId = "com.hybridinteractive.influen"',
+        'applicationId = "com.hybridinteractive.shopkart"',
       );
       expect(
         replaceIdentity('package com.example.app_template', id),
-        'package com.hybridinteractive.influen',
+        'package com.hybridinteractive.shopkart',
       );
       expect(
         replaceIdentity('ID = com.example.appTemplate.RunnerTests;', id),
-        'ID = com.hybridinteractive.influen.RunnerTests;',
+        'ID = com.hybridinteractive.shopkart.RunnerTests;',
       );
       expect(
         replaceIdentity('android:label="app_template"', id),
-        'android:label="Influen"',
+        'android:label="Shopkart"',
       );
       expect(
         replaceIdentity("appName = 'App Template';", id),
-        "appName = 'Influen';",
+        "appName = 'Shopkart';",
       );
     });
 
@@ -157,7 +177,7 @@ void main() {
     tearDown(() => root.deleteSync(recursive: true));
 
     test('renames, moves Kotlin, removes the generator, creates .env', () {
-      final id = AppIdentity(name: 'influen', displayName: 'Influen');
+      final id = AppIdentity(name: 'shopkart', displayName: 'Shopkart');
       applyChanges(root, planChanges(root, id));
 
       String read(String path) => File('${root.path}/$path').readAsStringSync();
@@ -165,14 +185,14 @@ void main() {
           FileSystemEntity.typeSync('${root.path}/$path') !=
           FileSystemEntityType.notFound;
 
-      expect(read('pubspec.yaml'), 'name: influen\n');
-      expect(read('lib/main.dart'), contains('package:influen/'));
+      expect(read('pubspec.yaml'), 'name: shopkart\n');
+      expect(read('lib/main.dart'), contains('package:shopkart/'));
       expect(
         read(
-          'android/app/src/main/kotlin/com/hybridinteractive/influen/'
+          'android/app/src/main/kotlin/com/hybridinteractive/shopkart/'
           'MainActivity.kt',
         ),
-        'package com.hybridinteractive.influen\n',
+        'package com.hybridinteractive.shopkart\n',
       );
       expect(exists('android/app/src/main/kotlin/com/example'), isFalse);
       expect(read('CLAUDE.md'), '- Keep me\n');
