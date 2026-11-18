@@ -8,6 +8,9 @@ abstract final class AppTheme {
   static ThemeData get lightTheme {
     return ThemeData(
       useMaterial3: true,
+      // Also set on every AppTextStyles style: the AppBar title and button
+      // styles are set explicitly and do not inherit this.
+      fontFamily: AppTextStyles.fontFamily,
       brightness: Brightness.light,
       primaryColor: AppColors.primary,
       scaffoldBackgroundColor: AppColors.backgroundLight,
@@ -74,6 +77,9 @@ abstract final class AppTheme {
   static ThemeData get darkTheme {
     return ThemeData(
       useMaterial3: true,
+      // Also set on every AppTextStyles style: the AppBar title and button
+      // styles are set explicitly and do not inherit this.
+      fontFamily: AppTextStyles.fontFamily,
       brightness: Brightness.dark,
       primaryColor: AppColors.primary,
       scaffoldBackgroundColor: AppColors.backgroundDark,

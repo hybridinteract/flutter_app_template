@@ -37,6 +37,7 @@ A production-ready Flutter enterprise starter template built following the **Flu
 | **Serialization** | `json_serializable` | Type-safe JSON parsing via code generation |
 | **Local Storage** | `shared_preferences` & `flutter_secure_storage` | Separation of preferences vs. encrypted auth tokens |
 | **Image Caching** | `cached_network_image` | Efficient remote image loading & memory caching |
+| **Vector & Animation** | `flutter_svg` & `lottie` | Bundled SVGs (`AppSvg`) and Lottie animations (`AppLottie`) |
 | **Localization** | `flutter_localizations` + gen-l10n | All UI text in `lib/core/l10n/arb/*.arb`, accessed via `context.l10n` |
 | **Formatting** | `intl` | Currencies, dates, relative timestamps |
 | **Crash Reporting** | `firebase_crashlytics` (abstracted) | Centralized error capturing with graceful debug fallback |
@@ -157,6 +158,8 @@ flutter run --release --dart-define-from-file=.env
 
 *(Note: `BASE_URL` is strictly loaded from `.env`. An error will be thrown if `BASE_URL` is missing).*
 
+The IDE **Run/Debug** buttons pass the same flag through `.vscode/launch.json` (VS Code) and `.idea/runConfigurations/main_dart.xml` (Android Studio's `main.dart` configuration). If the app stops on a black screen with `BASE_URL is not defined`, the run configuration in use lacks `--dart-define-from-file=.env` under **Additional run args**.
+
 ---
 
 ## Architecture & Layering
@@ -194,6 +197,7 @@ lib/
 │   │                        # repositories/ controllers/ views/
 │   └── home/                # signed-in landing screen (view-only)
 └── main.dart
+assets/                      # images, brand, icons, svg, animations, fonts (docs/ARCHITECTURE.md)
 test/                        # mirrors lib/
 tool/                        # check_architecture.dart, sync_agent_config.dart, new_app.dart
 ```
@@ -268,6 +272,7 @@ This repository is set up for coding agents (**Claude Code**, **Antigravity**):
   - `/code-quality-check`: format, analyze, test, architecture audit, sync check (run before every commit).
   - `/debug-flow`: runbook for network, session expiry, BLoC, GetIt and GoRouter issues.
 - **Hooks** (`settings.json`): runs `dart format lib test` after file edits.
+- **Attribution** (`settings.json`): commits and PRs made with Claude Code get no `Co-Authored-By: Claude` line.
 
 ---
 

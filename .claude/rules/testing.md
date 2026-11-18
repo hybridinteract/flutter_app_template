@@ -12,3 +12,4 @@ paths:
 - Widget tests that render screens or `AppErrorWidget` must give the `MaterialApp` `localizationsDelegates: appLocalizationsDelegates` and `supportedLocales: AppLocalizations.supportedLocales` (import `core/l10n/l10n.dart`). Assert on the English strings.
 - Call `AppConfig.initialize(baseUrl: ...)` in `setUpAll` when code under test reads `AppConfig` (network, app root).
 - Never hit the real network; fake it with mocks or a fake `HttpClientAdapter` (see `test/core/network/api_interceptor_test.dart`).
+- Never depend on real files under `assets/`; supply them with `FakeAssetBundle` (`test/helpers/fake_asset_bundle.dart`) through `DefaultAssetBundle` (see `test/core/widgets/app_svg_test.dart`). Lottie parses asynchronously: pump inside `tester.runAsync` (see `app_lottie_test.dart`).

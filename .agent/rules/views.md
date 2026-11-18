@@ -15,6 +15,8 @@ paths:
   - `AppButton`, `AppTextField`: buttons and form fields.
   - `AppLoader`, `AppErrorWidget`, `AppEmptyWidget`: loading, error (with retry) and empty states.
   - `AppNetworkImage`: every image from a URL (cached, decoded at display size).
+  - `AppSvg`: every bundled SVG (`color` tints it; decorative unless `semanticLabel` is set).
+  - `AppLottie`: every bundled Lottie animation (own `RepaintBoundary`; decorative unless `semanticLabel` is set).
   - `AppPaginatedList`: lists fed by a paginated API (infinite scroll, pull-to-refresh, load-more footer).
   - `AppConfirmDialog.show(...)`: yes/no before destructive actions; returns `Future<bool>`.
   - `Debouncer` (`core/utils/`): search and filter input.

@@ -17,7 +17,7 @@
 | **Navigation** | go_router |
 | **Serialization** | json_serializable |
 | **Local storage** | shared_preferences (preferences), flutter_secure_storage (tokens) |
-| **Images** | cached_network_image |
+| **Images** | cached_network_image (URLs), flutter_svg (SVG), lottie (animations) |
 | **Localization** | flutter_localizations + gen-l10n (ARB files) |
 | **Formatting** | intl |
 | **Crash reporting** | firebase_crashlytics (behind `CrashReportingService`) |
@@ -58,8 +58,8 @@ lib/
 │   ├── session/                  # SessionExpiryNotifier
 │   ├── storage/                  # LocalStorage (prefs), SecureStorage (tokens)
 │   ├── theme/                    # AppTheme, AppColors, AppTextStyles, AppDimensions
-│   ├── utils/                    # Validators, Formatters, DateUtils, Helpers, AppBlocObserver
-│   └── widgets/                  # AppButton, AppTextField, AppLoader, AppErrorWidget, AppEmptyWidget, AppNetworkImage, AppPaginatedList, AppConfirmDialog
+│   ├── utils/                    # Validators, Formatters, DateUtils, Helpers, AppBlocObserver, registerAssetLicenses
+│   └── widgets/                  # AppButton, AppTextField, AppLoader, AppErrorWidget, AppEmptyWidget, AppNetworkImage, AppSvg, AppLottie, AppPaginatedList, AppConfirmDialog
 ├── features/
 │   ├── auth/
 │   │   ├── auth.dart             # PUBLIC API: the only file other features may import
@@ -67,9 +67,17 @@ lib/
 │   │   ├── models/ services/ repositories/ controllers/
 │   │   └── views/ (+ widgets/permission_guard.dart, auth_context_extensions.dart)
 │   └── home/                     # View-only feature (views/ + home_routes.dart)
-└── main.dart                     # Config → BLoC observer → DI → crash reporting → runApp(App)
+└── main.dart                     # Config → BLoC observer → asset licenses → DI → crash reporting → runApp(App)
 
-test/                             # Mirrors lib/ (test/core/..., test/features/<feature>/...)
+assets/                           # Bundled files; paths only through AppAssets, folders listed in pubspec.yaml
+├── images/                       # Raster images (Image.asset); 2.0x/ and 3.0x/ hold the same names at higher resolution
+├── brand/                        # Logo and brand marks (Image.asset or AppSvg)
+├── icons/                        # Custom raster icons not in the Material set (Image.asset)
+├── svg/                          # Vector icons and illustrations (AppSvg)
+├── animations/                   # Lottie .json files (AppLottie)
+└── fonts/                        # Font files + OFL license, declared under fonts: (AppTextStyles.fontFamily, AppAssets.licenses)
+
+test/                             # Mirrors lib/ (test/core/..., test/features/<feature>/...); shared fakes in test/helpers/
 tool/                             # check_architecture.dart, sync_agent_config.dart, new_app.dart
 ```
 
