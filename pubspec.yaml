@@ -30,6 +30,8 @@ dependencies:
   intl: ^0.20.2
   firebase_core: ^3.10.0
   firebase_crashlytics: ^4.3.0
+  flutter_svg: ^2.4.0
+  lottie: ^3.8.2
 
 dev_dependencies:
   flutter_test:
@@ -44,6 +46,28 @@ flutter:
   uses-material-design: true
   generate: true # gen-l10n: see l10n.yaml
 
-  # assets:
-  #   - assets/images/
-  #   - assets/icons/
+  # Code refers to asset paths only through AppAssets
+  # (lib/core/constants/app_assets.dart), never as inline strings.
+  # A listed folder does NOT include its subfolders, except the 2.0x/ and 3.0x/
+  # resolution folders inside images/: list every new subfolder here too.
+  # Every listed folder must exist (each keeps a .gitkeep), or the build prints
+  # "unable to find directory entry".
+  assets:
+    - assets/images/
+    - assets/brand/
+    - assets/icons/
+    - assets/svg/
+    - assets/animations/
+
+  # App font: put the files in assets/fonts/ and uncomment. Every listed font
+  # file must exist, or the build fails. Set the family name in
+  # AppTextStyles.fontFamily (lib/core/theme/app_text_styles.dart).
+  # Fonts under the SIL Open Font License (OFL) must ship with their license:
+  # put the license .txt next to the font, list that one file under assets:
+  # above (e.g. - assets/fonts/OFL.txt) and add it to AppAssets.licenses.
+  # fonts:
+  #   - family: AppFont
+  #     fonts:
+  #       - asset: assets/fonts/AppFont-Regular.ttf
+  #       - asset: assets/fonts/AppFont-Bold.ttf
+  #         weight: 700
