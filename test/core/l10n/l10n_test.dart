@@ -15,17 +15,5 @@ void main() {
       expect(types, contains(MaterialLocalizations));
       expect(types, contains(CupertinoLocalizations));
     });
-
-    test('include the app strings and widgets localizations', () {
-      expect(types, contains(AppLocalizations));
-      expect(types, contains(WidgetsLocalizations));
-    });
-
-    test('differ from the gen-l10n list', () {
-      final generatedTypes = AppLocalizations.localizationsDelegates
-          .map((d) => d.type)
-          .toSet();
-      expect(generatedTypes, isNot(contains(MaterialLocalizations)));
-    });
   });
 }

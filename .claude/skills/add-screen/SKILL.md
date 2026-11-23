@@ -1,6 +1,6 @@
 ---
 name: add-screen
-description: Add a new screen or sub-view to an existing feature under lib/features/<feature>/views/, connect it to the feature BLoC, register its route in the feature's routes file, and add widget tests.
+description: Add a new screen or sub-view to an existing feature under lib/features/<feature>/views/, connect it to the feature BLoC, register its route in the feature's routes file, and add a widget test only if it has a form.
 ---
 # Workflow: Add New Screen / Sub-View
 
@@ -39,11 +39,9 @@ description: Add a new screen or sub-view to an existing feature under lib/featu
 - Navigate to it with `context.push(RouteNames.productDetailsPath(id))`.
 
 ## 5. Widget test
-- File: `test/features/<feature>/views/<screen_name>_screen_test.dart`.
+- Only for a screen with a form: the two cases in `.claude/rules/testing.md` (invalid submit shows the error and dispatches nothing; valid submit dispatches the right event), in `test/features/<feature>/views/<screen_name>_screen_test.dart`.
 - Give the `MaterialApp` `localizationsDelegates: appLocalizationsDelegates` and `supportedLocales: AppLocalizations.supportedLocales`.
 - Wrap the screen in `BlocProvider<XBloc>.value(value: mockBloc, ...)` with `class MockXBloc extends MockBloc<XEvent, XState> implements XBloc {}`.
-- Cover loading, error (retry dispatches the event) and success.
-- `AppLoader` animates forever: use `tester.pump()` instead of `pumpAndSettle()` for loading states.
 
 ## 6. Verify
-`flutter analyze --fatal-infos` and `flutter test test/features/<feature>/`.
+`flutter analyze --fatal-infos`, and `flutter test <touched test files> -r failures-only 2>&1 | tail -5` (skip if none).

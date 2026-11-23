@@ -83,7 +83,7 @@
 ## ADR-016: The Template Ships Only auth + home
 - **Date**: 17 November 2026
 - **Context**: The template carried `booking` (a reference CRUD feature), `profile` and `settings`. Every new app had to delete them, and the rules pointed at `booking` as the pattern to copy, so deleting it left the rules pointing at nothing.
-- **Decision**: Keep only `auth` (shared by every app) and `home` (the signed-in landing screen). The full-stack reference is `features/auth/`. Patterns auth cannot show (route-scoped BLoC, list → detail with a path parameter, route test) are short `product` snippets in `.claude/rules/routing.md` and the write-tests skill; `AppPaginatedList` and `AppConfirmDialog` stay in `core/` with their own tests and doc examples.
+- **Decision**: Keep only `auth` (shared by every app) and `home` (the signed-in landing screen). The full-stack reference is `features/auth/`. Patterns auth cannot show (route-scoped BLoC, list → detail with a path parameter) are short `product` snippets in `.claude/rules/routing.md` and the write-tests skill; `AppPaginatedList` and `AppConfirmDialog` stay in `core/` with their own tests and doc examples.
 - **Consequences**: A new app starts with no sample code to remove. Agents copy patterns from the rules instead of from a sample feature.
 
 <!-- new-app:start -->

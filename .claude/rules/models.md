@@ -9,4 +9,4 @@ paths:
 - Match the backend's key casing in the annotation. The auth backend (FastAPI) uses snake_case: `@JsonSerializable(fieldRename: FieldRename.snake)`.
 - Accept alternative keys with `@JsonKey(readValue: _readX)` helpers (e.g. `json['created_at'] ?? json['createdAt']`) and give them a sensible default.
 - Models that contain other models use `@JsonSerializable(explicitToJson: true)` so nested objects serialize as maps.
-- Lock the backend contract with a test (see `test/features/auth/models/json_contract_test.dart`).
+- Model tests: only custom parsing and branching getters (testing.md).

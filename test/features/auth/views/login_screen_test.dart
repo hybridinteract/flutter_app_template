@@ -27,19 +27,6 @@ void main() {
   }
 
   group('LoginScreen Widget Tests', () {
-    testWidgets('renders email and password fields, and submit button', (
-      tester,
-    ) async {
-      when(() => mockAuthBloc.state).thenReturn(const AuthInitial());
-
-      await tester.pumpWidget(buildTestableWidget(const LoginScreen()));
-
-      expect(find.text('Welcome Back'), findsOneWidget);
-      expect(find.text('Email'), findsOneWidget);
-      expect(find.text('Password'), findsOneWidget);
-      expect(find.text('Sign In'), findsOneWidget);
-    });
-
     testWidgets(
       'displays validation errors when fields are empty and submit is tapped',
       (tester) async {

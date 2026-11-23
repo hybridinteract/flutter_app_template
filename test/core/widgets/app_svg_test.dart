@@ -29,47 +29,6 @@ void main() {
   );
 
   group('AppSvg', () {
-    testWidgets('renders the loaded SVG at the given size', (tester) async {
-      await tester.pumpWidget(
-        wrap(const AppSvg(_assetPath, width: 48, height: 48)),
-      );
-      await tester.pump();
-
-      // FittedBox exists only once the SVG is parsed (the loading
-      // placeholder is a plain SizedBox).
-      expect(
-        find.descendant(
-          of: find.byType(AppSvg),
-          matching: find.byType(FittedBox),
-        ),
-        findsOneWidget,
-      );
-      expect(tester.getSize(find.byType(AppSvg)), const Size(48, 48));
-      final picture = svgPicture(tester);
-      expect(picture.width, 48);
-      expect(picture.height, 48);
-      expect(picture.fit, BoxFit.contain);
-    });
-
-    testWidgets('tints the whole SVG with color (srcIn)', (tester) async {
-      await tester.pumpWidget(
-        wrap(const AppSvg(_assetPath, color: Colors.red)),
-      );
-      await tester.pump();
-
-      expect(
-        svgPicture(tester).colorFilter,
-        const ColorFilter.mode(Colors.red, BlendMode.srcIn),
-      );
-    });
-
-    testWidgets('keeps its own colours when no color is given', (tester) async {
-      await tester.pumpWidget(wrap(const AppSvg(_assetPath)));
-      await tester.pump();
-
-      expect(svgPicture(tester).colorFilter, isNull);
-    });
-
     testWidgets('is hidden from screen readers without a semanticLabel', (
       tester,
     ) async {

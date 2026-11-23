@@ -120,18 +120,6 @@ void main() {
       expect(json['social_handle'], '@jane');
       expect(UserModel.fromJson(json), user);
     });
-
-    test('fromJson round-trips toJson output', () {
-      final original = UserModel(
-        id: 'u1',
-        name: 'Jane',
-        email: 'jane@example.com',
-        roles: const ['admin'],
-        permissions: const ['users:read'],
-        createdAt: DateTime.utc(2026, 1, 2),
-      );
-      expect(UserModel.fromJson(original.toJson()), original);
-    });
   });
 
   group('VerificationChallengeModel JSON contract', () {

@@ -4,7 +4,7 @@ description: Systematic troubleshooting runbook for API/network errors, token re
 ---
 # Workflow: Systematic Architecture Debugging
 
-Reproduce first, then fix at the layer that owns the problem, then add a test that fails without the fix.
+Reproduce first, then fix at the layer that owns the problem, then, if the bug was in logic (BLoC, repository, parsing, core), add one test that fails without the fix.
 
 ## 1. Network & API (Dio, `lib/core/network/`)
 - **Symptoms**: requests failing, timeouts, wrong base URL.

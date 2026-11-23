@@ -1,61 +1,33 @@
 ---
 name: write-tests
-description: Generate unit tests (BLoC, repository, service, model, core) and widget/route tests that mirror lib/ under test/, using bloc_test and mocktail conventions.
+description: Write the minimum tests for a logic change (BLoC main event, and repository/model/form/core only where they hold logic) under test/, mirroring lib/, with bloc_test and mocktail.
 ---
-# Workflow: Write Tests for Architecture Layers
+# Workflow: Write Tests
 
-## Location
-`test/` mirrors `lib/`:
-| Source | Test |
-|---|---|
-| `lib/features/<f>/controllers/<f>_bloc.dart` | `test/features/<f>/controllers/<f>_bloc_test.dart` |
-| `lib/features/<f>/repositories/<f>_repository_impl.dart` | `test/features/<f>/repositories/<f>_repository_test.dart` |
-| `lib/features/<f>/models/<m>_model.dart` | `test/features/<f>/models/<m>_model_test.dart` |
-| `lib/features/<f>/views/<s>_screen.dart` | `test/features/<f>/views/<s>_screen_test.dart` |
-| `lib/features/<f>/<f>_routes.dart` | `test/features/<f>/<f>_routes_test.dart` |
-| `lib/core/<area>/<file>.dart` | `test/core/<area>/<file>_test.dart` |
+What to test, the budget, and how to run cheaply: `.claude/rules/testing.md`. Write only what it lists; if the change holds no logic, write nothing.
 
-Reference tests: `test/features/auth/` (BLoC, repository, models, screens) and `test/core/network/api_interceptor_test.dart`.
-
-## 1. BLoC (`bloc_test` + `mocktail`)
+## BLoC
 - `class MockXRepository extends Mock implements XRepository {}` (mock the contract).
-- Cases: initial state; per event `[Loading, Success]` and, with the repository throwing a `Failure`, `[Loading, Failure(message)]`.
-- Mocking `AuthRepository`? Stub `sessionExpired` in `setUp` (`thenAnswer((_) => const Stream.empty())` or a `StreamController`), because `AuthBloc` subscribes in its constructor.
-- Use `seed:` to start from a given state.
-
-## 2. Repository (`mocktail`)
-- Mock the service and storage (`MockXService`, `MockSecureStorage`, `MockLocalStorage`).
-- Cases: success (data returned, storage writes verified with `verify(...).called(1)`); service throws `DioException` / `Exception` → `throwsA(isA<Failure>())`; the failure message never contains raw exception text.
-
-## 3. Model
-- Equality, `fromJson`, `toJson`, `copyWith`, and any `readValue` fallbacks (e.g. `full_name` vs `name`).
-
-## 4. Widget (screen)
-- `class MockXBloc extends MockBloc<XEvent, XState> implements XBloc {}`; wrap with `BlocProvider<XBloc>.value`.
-- The `MaterialApp` needs `localizationsDelegates: appLocalizationsDelegates` and `supportedLocales: AppLocalizations.supportedLocales` (from `core/l10n/l10n.dart`).
-- Cases: loading shows `AppLoader` (use `tester.pump()`, not `pumpAndSettle()`, because it animates); success shows content; error shows `AppErrorWidget` and retry dispatches the event; forms show validation errors.
-
-## 5. Routes
-- Register real or mock dependencies in `getIt` in `setUp`; call `getIt.reset()` in `tearDown`.
-- Build `GoRouter(routes: XRoutes.routes)` and drive it with `router.push` / `router.pop`.
-- For list → detail routes (pattern in `.claude/rules/routing.md`), prove each route gets its own BLoC:
-  ```dart
-  getIt.registerFactory<ProductBloc>(() {
-    blocsCreated++;
+- Main event only: `[Loading, Success]`, and with the repository throwing a `Failure`, `[Loading, Failure(message)]`. Use `seed:` to start from a given state.
+- Mocking `AuthRepository`? Stub `sessionExpired` in `setUp` (`thenAnswer((_) => const Stream.empty())`), because `AuthBloc` subscribes in its constructor.
+```dart
+blocTest<ProductBloc, ProductState>(
+  'emits [ProductLoading, ProductFailure] when loading fails',
+  build: () {
+    // Throw a Failure (what the repository contract promises), never a raw exception.
+    when(() => repository.getProducts()).thenThrow(const ServerFailure(message: 'Server error'));
     return ProductBloc(repository);
-  });
-  // pump MaterialApp.router(routerConfig: GoRouter(initialLocation: RouteNames.products, routes: ProductRoutes.routes))
-  unawaited(router.push(RouteNames.productDetailsPath('p1'))); // push() completes only on pop
-  await tester.pumpAndSettle();
-  router.pop();
-  await tester.pumpAndSettle();
-  expect(find.text('List item title'), findsOneWidget); // list state survived
-  expect(blocsCreated, 2);
-  ```
+  },
+  act: (bloc) => bloc.add(const ProductsRequested()),
+  expect: () => [const ProductLoading(), const ProductFailure('Server error')],
+);
+```
 
-## 6. Network / core
-- Call `AppConfig.initialize(baseUrl: ..., enableLogging: false)` in `setUpAll` when the code reads `AppConfig`.
-- Never call the real network: use a fake `HttpClientAdapter`.
+## Repository (only status → Failure mapping or storage writes)
+Mock the service and storage; assert the specific `Failure` (`throwsA(isA<XFailure>())`) or the write (`verify(...).called(1)`).
+
+## Form
+Wrap in `BlocProvider<XBloc>.value(value: mockBloc)` with `class MockXBloc extends MockBloc<XEvent, XState> implements XBloc {}`. Submit empty → error shown, `verifyNever(() => bloc.add(any()))`; submit valid → `verify(() => bloc.add(const XRequested(...))).called(1)`.
 
 ## Verify
-`flutter test <path_to_test>` then the full `flutter test`.
+`flutter test <touched files> -r failures-only 2>&1 | tail -5`. The full suite runs once in code-quality-check.

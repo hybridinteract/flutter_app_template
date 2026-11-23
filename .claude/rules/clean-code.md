@@ -30,4 +30,4 @@ paths:
 ## Built to grow
 - New behaviour goes in a new file or feature folder, not into an ever-growing `utils` file or BLoC.
 - BLoCs depend on repository contracts, so implementations can change without touching them.
-- Every new public class in `core/` ships with a test under `test/core/`.
+- New logic in `core/` (utils, network, storage, session) gets the minimum test in testing.md; presentational widgets get none.

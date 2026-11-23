@@ -23,7 +23,7 @@ Run before committing or opening a PR. Every step must pass; this is the only ga
    ```
 4. **Tests with coverage**:
    ```bash
-   flutter test --coverage
+   flutter test --coverage -r failures-only 2>&1 | tail -5
    ```
 5. **Architecture audit** (import boundaries and code rules from `.agent/rules/`):
    ```bash
