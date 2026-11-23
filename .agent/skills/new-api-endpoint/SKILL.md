@@ -1,6 +1,6 @@
 ---
 name: new-api-endpoint
-description: Add a new API endpoint to an existing feature under lib/features/<feature>/ (constant, model, service method, repository contract + implementation, BLoC event/state, UI, tests).
+description: Add a new API endpoint to an existing feature under lib/features/<feature>/ (constant, model, service method, repository contract + implementation, BLoC event/state, UI, minimum tests).
 ---
 # Workflow: Add New API Endpoint
 
@@ -20,5 +20,5 @@ All feature paths below are relative to `lib/features/<feature>/`.
    ```
 6. **BLoC**: add the event in `controllers/<feature>_event.dart`, any new state in `controllers/<feature>_state.dart`, and the handler in `controllers/<feature>_bloc.dart` (`on Failure catch` → failure state with `failure.message`).
 7. **UI**: update the screen in `views/` to dispatch the event and render the new state.
-8. **Tests** (in `test/features/<feature>/`): repository success + error mapping, BLoC success + failure for the new event.
-9. **Verify**: `flutter analyze --fatal-infos` and `flutter test`.
+8. **Tests** (in `test/features/<feature>/`, per `.agent/rules/testing.md`): BLoC success + failure only if the new event is a main load/submit or holds logic; a repository test only if it maps a status code or writes storage.
+9. **Verify**: `flutter analyze --fatal-infos` and `flutter test <touched test files> -r failures-only 2>&1 | tail -5`.

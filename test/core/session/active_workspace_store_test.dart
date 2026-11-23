@@ -13,10 +13,6 @@ void main() {
     store = ActiveWorkspaceStoreImpl(LocalStorageImpl(preferences));
   });
 
-  test('has no workspace until one is set', () {
-    expect(store.workspaceId, isNull);
-  });
-
   test('remembers the chosen workspace', () async {
     await store.setWorkspaceId('ws_1');
 

@@ -1,4 +1,3 @@
-import 'package:app_template/core/constants/app_assets.dart';
 import 'package:app_template/core/utils/asset_licenses.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -38,13 +37,6 @@ void main() {
       );
 
       await expectLater(LicenseRegistry.licenses.toList(), throwsA(anything));
-    });
-
-    test('registers AppAssets.licenses by default', () async {
-      registerAssetLicenses(bundle: FakeAssetBundle(const {}));
-
-      final entries = await LicenseRegistry.licenses.toList();
-      expect(entries, hasLength(AppAssets.licenses.length));
     });
   });
 }

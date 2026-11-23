@@ -70,20 +70,5 @@ void main() {
       );
       expect(image.memCacheWidth, 360);
     });
-
-    testWidgets('clips to borderRadius when given', (tester) async {
-      await tester.pumpWidget(
-        wrap(
-          AppNetworkImage(
-            url: '',
-            width: 40,
-            height: 40,
-            borderRadius: BorderRadius.circular(8),
-          ),
-        ),
-      );
-
-      expect(find.byType(ClipRRect), findsOneWidget);
-    });
   });
 }

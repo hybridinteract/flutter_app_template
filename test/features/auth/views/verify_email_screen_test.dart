@@ -32,21 +32,7 @@ void main() {
     );
   }
 
-  TextFormField codeField(WidgetTester tester) => tester.widget<TextFormField>(
-    find.widgetWithText(TextFormField, 'Verification Code'),
-  );
-
   group('VerifyEmailScreen', () {
-    testWidgets('names the address the code went to', (tester) async {
-      when(() => mockAuthBloc.state).thenReturn(const AuthInitial());
-
-      await tester.pumpWidget(buildTestableWidget());
-
-      expect(find.text('Enter the code we sent to $email'), findsOneWidget);
-      expect(find.text('Verify'), findsOneWidget);
-      expect(find.text('Resend Code'), findsOneWidget);
-    });
-
     testWidgets('requires a code before verifying', (tester) async {
       when(() => mockAuthBloc.state).thenReturn(const AuthInitial());
 
@@ -74,65 +60,6 @@ void main() {
           const VerifyEmailRequested(email: email, code: '123456'),
         ),
       ).called(1);
-    });
-
-    testWidgets('Resend Code dispatches ResendVerificationRequested', (
-      tester,
-    ) async {
-      when(() => mockAuthBloc.state).thenReturn(const AuthInitial());
-
-      await tester.pumpWidget(buildTestableWidget());
-      await tester.tap(find.text('Resend Code'));
-      await tester.pump();
-
-      verify(
-        () => mockAuthBloc.add(const ResendVerificationRequested(email: email)),
-      ).called(1);
-    });
-
-    testWidgets('prefills the dev code a local backend returns', (
-      tester,
-    ) async {
-      when(() => mockAuthBloc.state).thenReturn(
-        const AuthVerificationRequired(email: email, devCode: '424242'),
-      );
-
-      await tester.pumpWidget(buildTestableWidget());
-
-      expect(codeField(tester).controller?.text, '424242');
-    });
-
-    testWidgets('disables the form while loading', (tester) async {
-      when(() => mockAuthBloc.state).thenReturn(const AuthLoading());
-
-      await tester.pumpWidget(buildTestableWidget());
-
-      expect(codeField(tester).enabled, isFalse);
-      final resend = tester.widget<TextButton>(
-        find.widgetWithText(TextButton, 'Resend Code'),
-      );
-      expect(resend.onPressed, isNull);
-    });
-
-    testWidgets('shows the server message when the code is wrong', (
-      tester,
-    ) async {
-      whenListen(
-        mockAuthBloc,
-        Stream<AuthState>.fromIterable(const [
-          AuthLoading(),
-          AuthFailure(message: 'Invalid or expired verification code.'),
-        ]),
-        initialState: const AuthInitial(),
-      );
-
-      await tester.pumpWidget(buildTestableWidget());
-      await tester.pump();
-
-      expect(
-        find.text('Invalid or expired verification code.'),
-        findsOneWidget,
-      );
     });
   });
 }

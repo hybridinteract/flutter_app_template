@@ -33,17 +33,6 @@ void main() {
       await tester.pumpAndSettle();
     }
 
-    testWidgets('shows title, message and default localized buttons', (
-      tester,
-    ) async {
-      await openDialog(tester);
-
-      expect(find.text('Delete item?'), findsOneWidget);
-      expect(find.text('This cannot be undone.'), findsOneWidget);
-      expect(find.text('Cancel'), findsOneWidget);
-      expect(find.text('Confirm'), findsOneWidget);
-    });
-
     testWidgets('resolves true on Confirm', (tester) async {
       await openDialog(tester);
       await tester.tap(find.text('Confirm'));

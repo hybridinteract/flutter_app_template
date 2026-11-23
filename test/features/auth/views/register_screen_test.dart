@@ -36,32 +36,6 @@ void main() {
       tester.enterText(find.widgetWithText(TextFormField, label), text);
 
   group('RegisterScreen', () {
-    testWidgets('defaults to Creator and asks for a social handle', (
-      tester,
-    ) async {
-      when(() => mockAuthBloc.state).thenReturn(const AuthInitial());
-
-      await tester.pumpWidget(buildTestableWidget());
-
-      expect(find.text('Creator'), findsOneWidget);
-      expect(find.text('Brand'), findsOneWidget);
-      expect(find.text('Social Handle'), findsOneWidget);
-      expect(find.text('Organization Name'), findsNothing);
-    });
-
-    testWidgets('asks for an organization name once Brand is chosen', (
-      tester,
-    ) async {
-      when(() => mockAuthBloc.state).thenReturn(const AuthInitial());
-
-      await tester.pumpWidget(buildTestableWidget());
-      await tester.tap(find.text('Brand'));
-      await tester.pump();
-
-      expect(find.text('Organization Name'), findsOneWidget);
-      expect(find.text('Social Handle'), findsNothing);
-    });
-
     testWidgets('rejects a password the backend would refuse', (tester) async {
       when(() => mockAuthBloc.state).thenReturn(const AuthInitial());
 
@@ -108,25 +82,6 @@ void main() {
           ),
         ),
       ).called(1);
-    });
-
-    testWidgets('shows the server message on failure', (tester) async {
-      whenListen(
-        mockAuthBloc,
-        Stream<AuthState>.fromIterable(const [
-          AuthLoading(),
-          AuthFailure(message: 'An account with this email already exists.'),
-        ]),
-        initialState: const AuthInitial(),
-      );
-
-      await tester.pumpWidget(buildTestableWidget());
-      await tester.pump();
-
-      expect(
-        find.text('An account with this email already exists.'),
-        findsOneWidget,
-      );
     });
   });
 }

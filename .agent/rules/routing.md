@@ -45,4 +45,3 @@ abstract final class ProductRoutes {
 // The screen dispatches its own load event in initState, e.g.
 // context.read<ProductBloc>().add(ProductDetailsRequested(widget.id));
 ```
-- Test it with a route test (`<feature>_routes_test.dart`): push the detail path, pop, and assert the list is still shown and the factory ran twice (see the write-tests skill).

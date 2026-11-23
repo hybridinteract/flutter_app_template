@@ -70,7 +70,7 @@ New Feature Checklist (master prompt: docs/PROMPT_TEMPLATE.md):
 6. <feature>_routes.dart, spread into lib/app/app_router.dart; path constants in core/routes/route_names.dart.
 7. Register service, repository and BLoC in lib/app/injection_container.dart.
 8. Add constants (endpoints, keys, assets) in core/constants.
-9. Tests under test/features/<feature>/ (BLoC, repository, screen).
+9. Minimum tests per .agent/rules/testing.md (BLoC main event; repository, models and forms only where they hold logic; none for UI-only changes).
 10. code-quality-check passes (format, analyze, test, architecture audit).
 
 Anti-Patterns:

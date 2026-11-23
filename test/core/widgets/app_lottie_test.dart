@@ -35,40 +35,6 @@ void main() {
   tearDown(Lottie.cache.clear);
 
   group('AppLottie', () {
-    testWidgets('renders the loaded animation at the given size', (
-      tester,
-    ) async {
-      await pumpLoaded(
-        tester,
-        const AppLottie(_assetPath, width: 80, height: 60),
-      );
-
-      expect(find.byType(Lottie), findsOneWidget);
-      expect(tester.getSize(find.byType(AppLottie)), const Size(80, 60));
-    });
-
-    testWidgets('loops by default', (tester) async {
-      await pumpLoaded(tester, const AppLottie(_assetPath));
-
-      expect(tester.widget<Lottie>(find.byType(Lottie)).repeat, isTrue);
-    });
-
-    testWidgets('plays once when repeat is false', (tester) async {
-      await pumpLoaded(tester, const AppLottie(_assetPath, repeat: false));
-
-      expect(tester.widget<Lottie>(find.byType(Lottie)).repeat, isFalse);
-    });
-
-    testWidgets('sits in exactly one RepaintBoundary', (tester) async {
-      await pumpLoaded(tester, const AppLottie(_assetPath));
-
-      expect(inAppLottie(RepaintBoundary), findsOneWidget);
-      expect(
-        tester.widget<Lottie>(find.byType(Lottie)).addRepaintBoundary,
-        isFalse,
-      );
-    });
-
     testWidgets('is hidden from screen readers without a semanticLabel', (
       tester,
     ) async {

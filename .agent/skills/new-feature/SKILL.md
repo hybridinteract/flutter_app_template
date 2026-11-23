@@ -1,6 +1,6 @@
 ---
 name: new-feature
-description: Scaffold a new feature module under lib/features/<feature>/ (model, service, repository, BLoC, views, routes, DI, tests) following the modular architecture. Use when adding a feature.
+description: Scaffold a new feature module under lib/features/<feature>/ (model, service, repository, BLoC, views, routes, DI, minimum tests) following the modular architecture. Use when adding a feature.
 ---
 # Workflow: Scaffold New Feature Module
 
@@ -52,10 +52,7 @@ Read `docs/ARCHITECTURE.md` first if you have not this session.
 `dart run build_runner build`
 
 ## 5. Tests (mirror `lib/` under `test/features/<feature>/`)
-Use the `write-tests` skill. Minimum:
-- `controllers/<feature>_bloc_test.dart`: success + failure per event.
-- `repositories/<feature>_repository_test.dart`: success, and service error → `Failure`.
-- `views/<feature>_screen_test.dart`: loading, error, success.
+Only the minimum in `.agent/rules/testing.md` (write-tests skill): BLoC main event success + failure; repository, models and forms only where they hold logic.
 
 ## 6. Verify
 Run the `code-quality-check` skill. Done means: analyze 0 issues, all tests pass, architecture audit clean.

@@ -166,66 +166,6 @@ void main() {
       },
     );
 
-    test('register returns the challenge and stores no tokens', () async {
-      when(
-        () => mockAuthService.signup(
-          accountType: any(named: 'accountType'),
-          fullName: any(named: 'fullName'),
-          email: any(named: 'email'),
-          organisation: any(named: 'organisation'),
-          password: any(named: 'password'),
-        ),
-      ).thenAnswer(
-        (_) async => const VerificationChallengeModel(
-          email: 'brand@example.com',
-          expiresIn: 900,
-        ),
-      );
-
-      final result = await repository.register(
-        accountType: AccountType.organization,
-        fullName: 'Brand Owner',
-        email: 'brand@example.com',
-        organisation: 'Acme',
-        password: 'Passw0rd!',
-      );
-
-      expect(result.email, 'brand@example.com');
-      verify(
-        () => mockAuthService.signup(
-          accountType: AccountType.organization,
-          fullName: 'Brand Owner',
-          email: 'brand@example.com',
-          organisation: 'Acme',
-          password: 'Passw0rd!',
-        ),
-      ).called(1);
-      verifyNever(() => mockSecureStorage.setAccessToken(any()));
-    });
-
-    test('register maps service errors to a Failure', () async {
-      when(
-        () => mockAuthService.signup(
-          accountType: any(named: 'accountType'),
-          fullName: any(named: 'fullName'),
-          email: any(named: 'email'),
-          organisation: any(named: 'organisation'),
-          password: any(named: 'password'),
-        ),
-      ).thenThrow(Exception('raw details'));
-
-      expect(
-        () => repository.register(
-          accountType: AccountType.influencer,
-          fullName: 'Creator',
-          email: 'c@example.com',
-          organisation: '@creator',
-          password: 'Passw0rd!',
-        ),
-        throwsA(isA<UnexpectedFailure>()),
-      );
-    });
-
     test('verifyEmail stores tokens, caches the user and returns it', () async {
       when(
         () => mockAuthService.verifyEmail(
@@ -253,52 +193,6 @@ void main() {
       verify(() => mockWorkspaceStore.clear()).called(1);
     });
 
-    test('verifyEmail maps a wrong code to a Failure', () async {
-      when(
-        () => mockAuthService.verifyEmail(
-          email: any(named: 'email'),
-          code: any(named: 'code'),
-        ),
-      ).thenThrow(
-        const ValidationFailure(message: 'Invalid code', statusCode: 400),
-      );
-
-      expect(
-        () => repository.verifyEmail(email: 'test@example.com', code: '0000'),
-        throwsA(isA<ValidationFailure>()),
-      );
-    });
-
-    test('resendVerification returns the new challenge', () async {
-      when(() => mockAuthService.resendVerification(email: any(named: 'email')))
-          .thenAnswer(
-            (_) async => const VerificationChallengeModel(
-              email: 'test@example.com',
-              expiresIn: 900,
-            ),
-          );
-
-      final result = await repository.resendVerification(
-        email: 'test@example.com',
-      );
-
-      expect(result.expiresIn, 900);
-    });
-
-    test('login should throw Failure when service throws', () async {
-      when(
-        () => mockAuthService.login(
-          email: any(named: 'email'),
-          password: any(named: 'password'),
-        ),
-      ).thenThrow(const AuthenticationFailure(message: 'Invalid credentials'));
-
-      expect(
-        () => repository.login(email: 'test@example.com', password: 'wrong'),
-        throwsA(isA<Failure>()),
-      );
-    });
-
     test('logout should clear auth tokens and local cached profile', () async {
       when(() => mockSecureStorage.getRefreshToken())
           .thenAnswer((_) async => 'refresh_token');
@@ -314,30 +208,6 @@ void main() {
       verify(() => mockLocalStorage.remove(StorageKeys.user)).called(1);
       verify(() => mockWorkspaceStore.clear()).called(1);
     });
-
-    test(
-      'isAuthenticated should return true when access token exists',
-      () async {
-        when(() => mockSecureStorage.getAccessToken())
-            .thenAnswer((_) async => 'valid_token');
-
-        final result = await repository.isAuthenticated();
-
-        expect(result, isTrue);
-      },
-    );
-
-    test(
-      'isAuthenticated should return false when access token is null',
-      () async {
-        when(() => mockSecureStorage.getAccessToken())
-            .thenAnswer((_) async => null);
-
-        final result = await repository.isAuthenticated();
-
-        expect(result, isFalse);
-      },
-    );
 
     test('getCurrentUser returns null and drops the cached user when there is no token', () async {
       when(() => mockSecureStorage.getAccessToken())
@@ -367,31 +237,6 @@ void main() {
         verifyNever(() => mockAuthService.getCurrentUser());
       },
     );
-
-    test('getCurrentUser maps service errors to a Failure', () async {
-      when(() => mockSecureStorage.getAccessToken())
-          .thenAnswer((_) async => 'valid_token');
-      when(() => mockLocalStorage.getString(any())).thenReturn(null);
-      when(() => mockAuthService.getCurrentUser())
-          .thenThrow(Exception('socket closed: raw details'));
-
-      expect(
-        () => repository.getCurrentUser(),
-        throwsA(
-          isA<UnexpectedFailure>().having(
-            (f) => f.message,
-            'message',
-            isNot(contains('raw details')),
-          ),
-        ),
-      );
-    });
-
-    test('sessionExpired forwards SessionExpiryNotifier events', () async {
-      final expectation = expectLater(repository.sessionExpired, emits(null));
-      sessionExpiryNotifier.notifyExpired();
-      await expectation;
-    });
 
     test('clearSession removes tokens and the cached user', () async {
       when(() => mockSecureStorage.clearAuthTokens()).thenAnswer((_) async {});

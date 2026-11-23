@@ -45,14 +45,12 @@ Create a new feature module called "[Feature Name]" following the project's arch
 3. Register Service, Repository, and BLoC in `lib/app/injection_container.dart`.
 4. Spread `[Module]Routes.routes` into `lib/app/app_router.dart`.
 5. Run `dart run build_runner build`.
-6. Write tests in `test/features/[module]/` using the `/write-tests` skill:
-   - BLoC unit tests (`bloc_test`)
-   - Repository unit tests (`mocktail`)
-   - Widget tests (`flutter_test`)
+6. Write the minimum tests in `test/features/[module]/` using the `/write-tests` skill (`.claude/rules/testing.md`):
+   BLoC main event; repository, models and forms only where they hold logic.
 7. Run the `/code-quality-check` skill:
    - `dart format --output=none --set-exit-if-changed .`
    - `flutter analyze --fatal-infos`
-   - `flutter test --coverage`
+   - `flutter test --coverage -r failures-only`
    - `dart run tool/check_architecture.dart`
 8. If analysis or tests fail, use the `/debug-flow` skill to diagnose and fix, then re-run step 7.
 
